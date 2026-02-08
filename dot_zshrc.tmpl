@@ -1,0 +1,11 @@
+eval "$(starship init zsh)"
+alias ls='eza -F'
+
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
