@@ -21,5 +21,5 @@ hide_when_typing = true
 bindings = [
   { key = "N", mods = "Command", action = "CreateNewWindow" },
   { key = "Back", mods = "Command", chars = "\u0015"},
-  { key = "Space", mods = "Option", mode = "~Vi", action = "ToggleViMode"},
+  { key = "Space", mods = "Option", mode = "~Search", action = "ToggleViMode"},
 ]
