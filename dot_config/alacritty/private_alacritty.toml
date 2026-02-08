@@ -1,0 +1,25 @@
+[general]
+import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
+
+[window]
+option_as_alt = "Both"
+
+[font]
+normal = { family = "MesloLGS Nerd Font Mono", style = "Regular"}
+size = 12.0
+
+[selection]
+save_to_clipboard = true
+
+[terminal]
+shell = "/opt/homebrew/bin/fish"
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+bindings = [
+  { key = "N", mods = "Command", action = "CreateNewWindow" },
+  { key = "Back", mods = "Command", chars = "\u0015"},
+  { key = "Space", mods = "Option", mode = "~Vi", action = "ToggleViMode"},
+]
