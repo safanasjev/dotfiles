@@ -7,6 +7,7 @@ starship init fish | source
 # Abbreviations
 abbr --add tks tmux kill-session -t
 abbr --add tls tmux ls
+abbr --add tla tmux a -t
 
 # for bashrc syntax (export VARIABLE=value) use (set -x VARIABLE_NAME value)
 set -x HOMEBREW_ASK 1
