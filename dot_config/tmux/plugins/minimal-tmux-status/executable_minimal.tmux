@@ -70,7 +70,7 @@ show_expanded_icon_for_all_tabs=$(get_tmux_option "@minimal-tmux-show-expanded-i
 
 # Setting the options in tmux
 tmux set-option -g status-position "$status"
-tmux set-option -g status-style bg=default,fg=default
+tmux set-option -g status-style bg=default, fg=default
 tmux set-option -g status-justify "$justify"
 
 tmux set-option -g status-left "$status_left_extra"
