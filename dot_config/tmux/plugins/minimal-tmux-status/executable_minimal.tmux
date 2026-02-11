@@ -58,7 +58,7 @@ indicator=$("$indicator_state" && echo " $indicator_str ")
 right_state=$(get_tmux_option "@minimal-tmux-right" true)
 left_state=$(get_tmux_option "@minimal-tmux-left" true)
 
-status_right=$("$right_state" && get_tmux_option "@minimal-tmux-status-right" " %H:%M  %d.%m.%y ")
+status_right=$("$right_state" && get_tmux_option "@minimal-tmux-status-right" " tmux ")
 status_left=$("$left_state" && get_tmux_option "@minimal-tmux-status-left" "${default_color}#{?client_prefix,,${indicator}}#[bg=${bg},fg=${fg},]#{?client_prefix,${indicator},}${default_color}")
 status_right_extra="$status_right$(get_tmux_option "@minimal-tmux-status-right-extra" "")"
 status_left_extra="$status_left$(get_tmux_option "@minimal-tmux-status-left-extra" "")"
@@ -70,7 +70,7 @@ show_expanded_icon_for_all_tabs=$(get_tmux_option "@minimal-tmux-show-expanded-i
 
 # Setting the options in tmux
 tmux set-option -g status-position "$status"
-tmux set-option -g status-style bg=default, fg=default
+tmux set-option -g status-style bg=default,fg=default
 tmux set-option -g status-justify "$justify"
 
 tmux set-option -g status-left "$status_left_extra"
