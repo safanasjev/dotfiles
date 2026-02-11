@@ -38,7 +38,7 @@ get_tmux_option() {
 # - @minimal-tmux-right-arrow: right arrow symbol
 # - @minimal-tmux-left-arrow: right left symbol
 
-default_color="#[bg=default,fg=default,bold]"
+default_color="#[bg=default,fg=default,]"
 
 # variables
 bg=$(get_tmux_option "@minimal-tmux-bg" '#698DDA')
@@ -52,14 +52,14 @@ status=$(get_tmux_option "@minimal-tmux-status" "bottom")
 justify=$(get_tmux_option "@minimal-tmux-justify" "centre")
 
 indicator_state=$(get_tmux_option "@minimal-tmux-indicator" true)
-indicator_str=$(get_tmux_option "@minimal-tmux-indicator-str" " tmux ")
+indicator_str=$(get_tmux_option "@minimal-tmux-indicator-str" " #S ")
 indicator=$("$indicator_state" && echo " $indicator_str ")
 
 right_state=$(get_tmux_option "@minimal-tmux-right" true)
 left_state=$(get_tmux_option "@minimal-tmux-left" true)
 
-status_right=$("$right_state" && get_tmux_option "@minimal-tmux-status-right" "#S")
-status_left=$("$left_state" && get_tmux_option "@minimal-tmux-status-left" "${default_color}#{?client_prefix,,${indicator}}#[bg=${bg},fg=${fg},bold]#{?client_prefix,${indicator},}${default_color}")
+status_right=$("$right_state" && get_tmux_option "@minimal-tmux-status-right" " ${default_color}%H:%M  %d.%m.%y ")
+status_left=$("$left_state" && get_tmux_option "@minimal-tmux-status-left" "${default_color}#{?client_prefix,,${indicator}}#[bg=${bg},fg=${fg},]#{?client_prefix,${indicator},}${default_color}")
 status_right_extra="$status_right$(get_tmux_option "@minimal-tmux-status-right-extra" "")"
 status_left_extra="$status_left$(get_tmux_option "@minimal-tmux-status-left-extra" "")"
 
