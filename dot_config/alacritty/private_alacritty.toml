@@ -3,7 +3,7 @@ import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
 
 [window]
 option_as_alt = "Both"
-padding = { x = 0, y = 2 }   
+padding = { x = 0, y = 3 }   
 
 [font]
 normal = { family = "MesloLGS Nerd Font Mono", style = "Regular"}
@@ -22,5 +22,7 @@ hide_when_typing = true
 bindings = [
   { key = "N", mods = "Command", action = "CreateNewWindow" },
   { key = "Back", mods = "Command", chars = "\u0015"},
+  { key = "ArrowLeft", mods = "Command", chars = "\u001bOH" },
+  { key = "ArrowRight", mods = "Command", chars = "\u001bOF" },
   { key = "Space", mods = "Option", mode = "~Search", action = "ToggleViMode"},
 ]
