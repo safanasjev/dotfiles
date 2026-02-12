@@ -6,7 +6,7 @@ option_as_alt = "Both"
 padding = { x = 1, y = 2 }   
 
 [font]
-normal = { family = "MesloLGS Nerd Font Mono", style = "Regular"}
+normal = { family = "MesloLGS Nerd Font", style = "Regular"}
 size = 13.0
 
 [selection]
