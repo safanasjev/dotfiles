@@ -4,14 +4,16 @@ end
 
 starship init fish | source
 
-# Abbreviations
-
+### Abbreviations
 # TMUX
 abbr --add tks tmux kill-session -t
 abbr --add tls tmux ls
 abbr --add ta tmux a -t
 abbr --add tns tmux new -s
 
+# cd
+abbr --add .. cd ..
+abbr --add ... cd ../..
+
 # for bashrc syntax (export VARIABLE=value) use (set -x VARIABLE_NAME value)
-set -x HOMEBREW_ASK 1
 set -x DYLD_LIBRARY_PATH /usr/local/lib
