@@ -1,26 +1,5 @@
 --[[
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
-
 What is Kickstart?
 
   Kickstart.nvim is *not* a distribution.
@@ -874,7 +853,7 @@ require('lazy').setup(
         appearance = {
           -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
           -- Adjusts spacing to ensure icons are aligned
-          nerd_font_variant = 'mono',
+          nerd_font_variant = 'normal',
         },
 
         completion = {
@@ -901,10 +880,18 @@ require('lazy').setup(
         -- the rust implementation via `'prefer_rust_with_warning'`
         --
         -- See :h blink-cmp-config-fuzzy for more information
-        fuzzy = { implementation = 'lua' },
+        fuzzy = {
+          implementation = 'prefer_rust_with_warning',
+          max_typos = 2,
+          frecency = { enabled = true },
+          use_proximity = true,
+        },
 
-        -- Shows a signature help window while you type arguments for a function
-        signature = { enabled = true },
+        -- Show a signature help window while you type arguments for a function
+        signature = {
+          enabled = true,
+          trigger = { enabled = false },
+        },
       },
     },
 
@@ -966,9 +953,6 @@ require('lazy').setup(
           return '%2l:%-2v'
         end
 
-        -- Icons
-        require('mini.icons').setup()
-
         -- ... and there is more!
         --  Check out: https://github.com/echasnovski/mini.nvim
       end,
@@ -999,22 +983,6 @@ require('lazy').setup(
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     },
-
-    -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-    -- init.lua. If you want these files, they are in the repository, so you can just download them and
-    -- place them in the correct locations.
-
-    -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-    --
-    --  Here are some example plugins that I've included in the Kickstart repository.
-    --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-    --
-    -- require 'kickstart.plugins.debug',
-    -- require 'kickstart.plugins.indent_line',
-    -- require 'kickstart.plugins.lint',
-    -- require 'kickstart.plugins.autopairs',
-    -- require 'kickstart.plugins.neo-tree',
-    -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
     -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
     --    This is the easiest way to modularize your config.
@@ -1053,6 +1021,30 @@ require('lazy').setup(
         -- add any options here
       },
     },
+
+    -- Icons
+    { 'nvim-tree/nvim-web-devicons', opts = {} },
+
+    -- Neo-tree
+    {
+      'nvim-neo-tree/neo-tree.nvim',
+      branch = 'v3.x',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+        'MunifTanjim/nui.nvim',
+        'nvim-tree/nvim-web-devicons', -- optional, but recommended
+      },
+      lazy = false, -- neo-tree will lazily load itself
+      ---@module 'neo-tree'
+      ---@type neotree.Config
+      opts = {
+        window = {
+          mappings = {
+            ['p'] = { 'toggle_preview', config = { use_float = true, use_image_nvim = true } },
+          },
+        },
+      },
+    },
   },
 
   --
@@ -1064,21 +1056,7 @@ require('lazy').setup(
     ui = {
       -- If you are using a Nerd Font: set icons to an empty table which will use the
       -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-      icons = vim.g.have_nerd_font and {} or {
-        cmd = '⌘',
-        config = '🛠',
-        event = '📅',
-        ft = '📂',
-        init = '⚙',
-        keys = '🗝',
-        plugin = '🔌',
-        runtime = '💻',
-        require = '🌙',
-        source = '📄',
-        start = '🚀',
-        task = '📌',
-        lazy = 'H ',
-      },
+      icons = vim.g.have_nerd_font and {},
     },
   }
 )
