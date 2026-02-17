@@ -777,7 +777,7 @@ require('lazy').setup(
         end,
         formatters_by_ft = {
           lua = { 'stylua' },
-          python = { 'ruff_organize_imports', 'ruff_fix', 'ruff_format' },
+          python = { 'ruff_organize_imports', 'ruff_format' },
           c = { 'clang-format' },
           --
           -- You can use 'stop_after_first' to run the first available formatter from the list
