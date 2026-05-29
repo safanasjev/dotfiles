@@ -1,0 +1,142 @@
+#!/bin/bash
+
+
+# Git must be installed before running this script.
+
+
+NODEJS="nodejs"
+FD_FIND="fd"
+UV="uv"
+JAVA="java"
+STARSHIP="starship"
+TREE_SITTER="tree-sitter-cli"
+SYNCTHING="syncthing"
+SHELLCHECK="shellcheck"
+
+
+### MacOS ###
+{{- if eq .chezmoi.os "darwin" }}
+# Xcode Command Line Tools and Homebrew must be installed before running this script.
+# run: xcode-select --install
+# run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+PKG_MAN="brew install"
+NODEJS="node"
+SYNCTHING=""
+$PKG_MAN --cask alt-tab alacritty brave-browser betterdisplay easydict font-meslo-lg-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app
+xattr -d com.apple.quarantine /Applications/Alacritty.app  # Disable Gatekeeper
+
+
+### openSUSE Tumbleweed ###
+{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+PKG_MAN="sudo zypper install -y"
+JAVA="java-21-openjdk"
+TREE_SITTER="tree-sitter"
+SHELLCHECK="ShellCheck"
+UV=""
+
+sudo zypper refresh
+sudo zypper dist-upgrade
+
+# brave-browser
+sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+
+# vscode
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
+echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo > /dev/null
+
+sudo zypper refresh
+$PKG_MAN alacritty flatpak keyd tailscale ksshaskpass6 brave-browser code gnome-disk-utility patterns-devel-base-devel_basis
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+sudo systemctl enable tailscaled --now
+sudo tailscale set --operator=$USER
+
+sudo firewall-cmd --permanent --add-service=mdns
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+
+# uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# nerd font
+mkdir -p ~/.local/share/fonts
+curl -fLo ~/.local/share/fonts/MesloLGSNerdFont-Regular.ttf \
+  https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/S/Regular/MesloLGSNerdFont-Regular.ttf
+fc-cache -fv
+
+# editors repo
+sudo zypper addrepo https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/editors.repo
+
+sudo zypper refresh
+
+### Debian/Ubuntu ###
+{{- else if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
+sudo apt full-upgrade
+PKG_MAN="sudo apt-get install -y"
+$PKG_MAN curl build-essential fontconfig gpg 
+FD_FIND="fd-find"
+UV=""
+JAVA="default-jdk"
+STARSHIP=""
+
+# uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /etc/apt/keyrings/yarn-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+# nerd font
+mkdir -p ~/.local/share/fonts
+curl -fLo ~/.local/share/fonts/MesloLGSNerdFont-Regular.ttf \
+  https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/S/Regular/MesloLGSNerdFont-Regular.ttf
+fc-cache -fv
+
+# tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# eza
+sudo mkdir -p /etc/apt/keyrings
+wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+
+# starship
+curl -sS https://starship.rs/install.sh | sh
+
+sudo apt-get update
+
+### Arch ###
+{{- else if eq .chezmoi.osRelease.idLike "arch" }}
+PKG_MAN="sudo pacman -Syu --needed"
+$PKG_MAN paru alacritty flatpak ttf-meslo-nerd keyd obsidian tailscale ksshaskpass base-devel
+flatpak install easyeffects
+paru -Syu --needed localsend-bin visual-studio-code-bin brave-bin
+JAVA="jdk-openjdk"
+sudo systemctl enable tailscaled --now
+
+{{- end }}
+
+$PKG_MAN curl fping unzip tmux fish neovim ripgrep $FD_FIND bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING $STARSHIP $NODEJS $TREE_SITTER mosh npm yarn $JAVA rsync $SHELLCHECK
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+### Clean cache and post install scripts ###
+{{- if eq .chezmoi.os "darwin" }}
+rm -rf ~/Library/Caches/Homebrew/
+
+{{- else if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
+sudo apt-get clean
+
+{{- else if eq .chezmoi.osRelease.idLike "arch" }}
+sudo pacman -Sc
+
+{{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
+
+sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app md.obsidian.Obsidian
+sudo zypper refresh
+sudo zypper clean --all
+sudo zypper refresh
+
+{{- end }}
+
+echo "Everything is installed." 
