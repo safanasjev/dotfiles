@@ -5,7 +5,8 @@ import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
 option_as_alt = "Both"
 
 [font]
-normal = { family = "MesloLGS Nerd Font", style = "Regular"}
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular"}
+
 size = 13.0
 
 [selection]

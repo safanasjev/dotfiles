@@ -9,6 +9,7 @@ starship init fish | source
 ### obsidian
 abbr --add obs obsidian
 
+
 ### eza
 abbr --add ls eza -F
 abbr --add ll eza -F -lh
