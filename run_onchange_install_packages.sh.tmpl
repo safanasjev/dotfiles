@@ -23,7 +23,7 @@ SHELLCHECK="shellcheck"
 PKG_MAN="brew install"
 NODEJS="node"
 SYNCTHING=""
-$PKG_MAN --cask alacritty brave-browser betterdisplay easydict font-meslo-lg-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app
+$PKG_MAN --cask alacritty helium-browser betterdisplay easydict font-meslo-lg-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app
 xattr -d com.apple.quarantine /Applications/Alacritty.app  # Disable Gatekeeper
 
 
@@ -38,15 +38,12 @@ UV=""
 sudo zypper refresh
 sudo zypper dist-upgrade
 
-# brave-browser
-sudo zypper addrepo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-
 # vscode
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo > /dev/null
 
 sudo zypper refresh
-$PKG_MAN alacritty flatpak keyd tailscale ksshaskpass6 brave-browser code gnome-disk-utility patterns-devel-base-devel_basis
+$PKG_MAN alacritty flatpak keyd tailscale ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 sudo systemctl enable tailscaled --now
 sudo tailscale set --operator=$USER
@@ -111,7 +108,7 @@ sudo apt-get update
 PKG_MAN="sudo pacman -Syu --needed"
 $PKG_MAN paru alacritty flatpak ttf-meslo-nerd keyd obsidian tailscale ksshaskpass base-devel
 flatpak install easyeffects
-paru -Syu --needed localsend-bin visual-studio-code-bin brave-bin
+paru -Syu --needed localsend-bin visual-studio-code-bin
 JAVA="jdk-openjdk"
 sudo systemctl enable tailscaled --now
 
@@ -132,7 +129,7 @@ sudo pacman -Sc
 
 {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 
-sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app md.obsidian.Obsidian
+sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app md.obsidian.Obsidian it.mijorus.gearlever
 sudo zypper refresh
 sudo zypper clean --all
 sudo zypper refresh
