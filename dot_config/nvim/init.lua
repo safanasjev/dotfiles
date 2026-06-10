@@ -175,8 +175,8 @@ local diagnostic_goto = function(next, severity)
     }
   end
 end
-vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Diagnostics Quickfix List' })
-vim.keymap.set('n', '<leader>dl', vim.diagnostic.open_float, { desc = 'Line Diagnostics' })
+vim.keymap.set('n', '<leader>tq', vim.diagnostic.setloclist, { desc = 'Toggle Diagnostics Quickfix List' })
+vim.keymap.set('n', '<leader>tl', vim.diagnostic.open_float, { desc = 'Toggle Line Diagnostics' })
 vim.keymap.set('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
 vim.keymap.set('n', '[d', diagnostic_goto(false), { desc = 'Prev Diagnostic' })
 
