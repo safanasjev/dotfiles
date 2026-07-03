@@ -23,7 +23,7 @@ SHELLCHECK="shellcheck"
 PKG_MAN="brew install"
 NODEJS="node"
 SYNCTHING=""
-$PKG_MAN --cask alacritty helium-browser betterdisplay easydict font-meslo-lg-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app
+$PKG_MAN --cask alacritty firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app signal
 xattr -d com.apple.quarantine /Applications/Alacritty.app  # Disable Gatekeeper
 
 
@@ -55,12 +55,6 @@ sudo firewall-cmd --reload
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# nerd font
-mkdir -p ~/.local/share/fonts
-curl -fLo ~/.local/share/fonts/MesloLGSNerdFont-Regular.ttf \
-  https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/S/Regular/MesloLGSNerdFont-Regular.ttf
-fc-cache -fv
-
 # editors repo
 sudo zypper addrepo https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/editors.repo
 
@@ -83,12 +77,6 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /etc/apt/keyrings/yarn-archive-keyring.gpg > /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-# nerd font
-mkdir -p ~/.local/share/fonts
-curl -fLo ~/.local/share/fonts/MesloLGSNerdFont-Regular.ttf \
-  https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/Meslo/S/Regular/MesloLGSNerdFont-Regular.ttf
-fc-cache -fv
-
 # tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
 
@@ -106,7 +94,7 @@ sudo apt-get update
 ### Arch ###
 {{- else if eq .chezmoi.osRelease.idLike "arch" }}
 PKG_MAN="sudo pacman -Syu --needed"
-$PKG_MAN paru alacritty flatpak ttf-meslo-nerd keyd obsidian tailscale ksshaskpass base-devel
+$PKG_MAN paru alacritty flatpak keyd obsidian tailscale ksshaskpass base-devel
 flatpak install easyeffects
 paru -Syu --needed localsend-bin visual-studio-code-bin
 JAVA="jdk-openjdk"
