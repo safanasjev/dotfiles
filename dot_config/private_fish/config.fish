@@ -18,16 +18,16 @@ abbr --add la eza -F -alh
 ### tmux
 abbr --add tks tmux kill-session -t
 abbr --add tls tmux ls
-abbr --add ta tmux a
-abbr --add tat tmux a -t
+abbr --add ta tmux attach
+abbr --add tat tmux attach -t
 abbr --add tns tmux new -s
 
 ### chezmoi
-abbr --add chez chezmoi
+abbr --add cz chezmoi
 
 ## Environment variables
 
-### For bashrc syntax (export VARIABLE=value) use (set -x VARIABLE_NAME value)
+### For bashrc syntax (export VARIABLE=value) use "set -x VARIABLE value"
 set -x DYLD_LIBRARY_PATH /usr/local/lib
 
 ### Set github username

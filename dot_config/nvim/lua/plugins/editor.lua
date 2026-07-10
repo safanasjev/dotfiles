@@ -113,6 +113,9 @@ return {
     ---@type oil.SetupOpts
     opts = {},
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+    keys = {
+      { '<leader>o', '<cmd>Oil<cr>', desc = 'Oil File Explorer' },
+    },
     lazy = false,
   },
 
