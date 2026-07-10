@@ -117,6 +117,7 @@ sudo pacman -Sc
 
 {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 
+flatpak update
 sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app md.obsidian.Obsidian it.mijorus.gearlever
 sudo zypper refresh
 sudo zypper clean --all
