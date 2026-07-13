@@ -45,7 +45,9 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 sudo zypper refresh
 $PKG_MAN alacritty flatpak keyd tailscale ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-sudo systemctl enable tailscaled --now
+
+# tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale set --operator=$USER
 
 sudo firewall-cmd --permanent --add-service=mdns
@@ -55,8 +57,8 @@ sudo firewall-cmd --reload
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# editors repo
-sudo zypper addrepo https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/editors.repo
+## editors repo
+# sudo zypper addrepo https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/editors.repo
 
 sudo zypper refresh
 
@@ -77,8 +79,6 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /etc/apt/keyrings/yarn-archive-keyring.gpg > /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-# tailscale
-curl -fsSL https://tailscale.com/install.sh | sh
 
 # eza
 sudo mkdir -p /etc/apt/keyrings
