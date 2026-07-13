@@ -6,5 +6,11 @@ characters or so. Feel free to be detailed.
 Explain the problem that this commit is solving. Focus on why you
 are making this change as opposed to how (the code explains that).
 
+The body should answer:
+- What problem forced this change?
+- What alternatives did you consider?
+- What are the trade-offs or implications?
+- What might be surprising about this approach?
+
 Resolves: #123
 Refs: #456
