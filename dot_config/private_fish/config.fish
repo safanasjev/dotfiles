@@ -24,6 +24,8 @@ abbr --add tns tmux new -s
 
 ### chezmoi
 abbr --add cz chezmoi
+abbr --add czup chezmoi update --exclude=scripts
+abbr --add czra chezmoi re-add
 
 ## Environment variables
 
