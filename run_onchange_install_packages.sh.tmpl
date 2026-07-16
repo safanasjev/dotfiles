@@ -104,6 +104,7 @@ sudo systemctl enable tailscaled --now
 
 $PKG_MAN curl fping unzip tmux fish neovim ripgrep $FD_FIND bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING $STARSHIP $NODEJS $TREE_SITTER mosh npm yarn $JAVA rsync $SHELLCHECK
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
 ### Clean cache and post install scripts ###
 {{- if eq .chezmoi.os "darwin" }}
