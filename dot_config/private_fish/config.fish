@@ -11,7 +11,7 @@ abbr --add obs obsidian
 
 
 ### eza
-abbr --add ls eza -F
+abbr --add ls eza
 abbr --add ll eza -F -lh
 abbr --add la eza -F -alh
 
