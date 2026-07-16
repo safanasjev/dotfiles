@@ -1,6 +1,7 @@
 [general]
 import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
 
+{{- if eq .chezmoi.os "darwin" }}
 [window]
 option_as_alt = "Both"
 
@@ -15,8 +16,22 @@ save_to_clipboard = true
 [keyboard]
 bindings = [
   { key = "N", mods = "Command", action = "CreateNewWindow" },
-  { key = "Back", mods = "Command", chars = "\u0015"},
-  { key = "ArrowLeft", mods = "Command", chars = "\u001bOH" },
-  { key = "ArrowRight", mods = "Command", chars = "\u001bOF" },
   { key = "Space", mods = "Option", mode = "~Search", action = "ToggleViMode"},
 ]
+
+{{- else }}
+[font]
+normal = { family = "JetBrainsMonoNL Nerd Font", style = "Regular"}
+
+size = 12.1
+
+[selection]
+save_to_clipboard = true
+
+[keyboard]
+bindings = [
+  { key = "N", mods = "Control", action = "CreateNewWindow" },
+  { key = "Space", mods = "Control", mode = "~Search", action = "ToggleViMode"},
+]
+
+{{- end }}
