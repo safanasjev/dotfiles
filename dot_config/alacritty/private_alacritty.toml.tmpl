@@ -2,6 +2,7 @@
 import = ["~/.config/alacritty/themes/tokyonight_night.toml"]
 
 {{- if eq .chezmoi.os "darwin" }}
+
 [window]
 option_as_alt = "Both"
 
@@ -20,6 +21,7 @@ bindings = [
 ]
 
 {{- else }}
+
 [font]
 normal = { family = "JetBrainsMonoNL Nerd Font", style = "Regular"}
 
