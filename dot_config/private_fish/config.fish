@@ -11,9 +11,10 @@ abbr --add obs obsidian
 
 
 ### eza
-abbr --add ls eza
-abbr --add ll eza -lh
-abbr --add la eza -alh
+abbr --add ls eza -F --
+abbr --add ll eza -lhF --
+abbr --add la eza -alhF --
+abbr --add lst eza -TF --
 
 ### tmux
 abbr --add tks tmux kill-session -t
