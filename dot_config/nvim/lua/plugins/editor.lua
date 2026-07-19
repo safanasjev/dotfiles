@@ -66,10 +66,10 @@ return {
           vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
 
           -- Fuzzy find all the symbols in current document
-          vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
+          vim.keymap.set('n', 'grO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
 
           -- Fuzzy find all the symbols in current workspace
-          vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+          vim.keymap.set('n', 'grW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
 
           -- Goto type definition
           vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = 'Goto Type Definition' })
@@ -106,6 +106,18 @@ return {
     },
   },
 
+  -- Extend and create a/i textobjects
+  {
+    'nvim-mini/mini.ai',
+    opts = {},
+  },
+
+  -- Fast and feature-rich surround actions
+  {
+    'nvim-mini/mini.surround',
+    opts = {},
+  },
+
   -- Oil file explorer
   {
     'stevearc/oil.nvim',
@@ -129,7 +141,6 @@ return {
         -- Document existing key chains
         { '<leader>f', group = 'Find', mode = { 'n', 'v' } },
         { '<leader>g', group = 'Git', mode = { 'n', 'v' } },
-        { '<leader>gh', group = 'Git Hunk', mode = { 'n', 'v' } },
         { '<leader>d', group = 'Diagnostics', mode = { 'n' } },
         { '<leader>t', group = 'Toggle' },
         { 'gr', group = 'LSP', mode = { 'n' } },

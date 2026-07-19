@@ -9,6 +9,7 @@ return {
       local parsers = {
         'cpp',
         'go',
+        'rust',
         'python',
         'java',
         'bash',

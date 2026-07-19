@@ -17,13 +17,13 @@ return {
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
           mode = mode or 'n'
-          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = '' .. desc })
         end
         -- Rename variable under cursor
         map('grn', vim.lsp.buf.rename, 'Rename')
 
         -- Execute a code action
-        map('gra', vim.lsp.buf.code_action, 'Goto Code Actions', { 'n', 'x' })
+        map('gra', vim.lsp.buf.code_action, 'Code Actions', { 'n', 'x' })
 
         -- Go to declaration
         map('grD', vim.lsp.buf.declaration, 'Goto Declaration')
