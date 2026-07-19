@@ -103,15 +103,9 @@ return {
     build = 'cd app && yarn install',
     init = function() vim.g.mkdp_filetypes = { 'markdown' } end,
     ft = { 'markdown' },
-    config = function()
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'markdown',
-        callback = function(args)
-          vim.keymap.set('n', '<leader>tm', '<cmd>MarkdownPreviewToggle<cr>')
-          { buffer = args.buf, desc = 'Toggle Markdown Preview' }
-        end
-      })
-    end,
+    keys = {
+      { '<leader>tm', '<cmd>MarkdownPreviewToggle<cr>', desc = 'Toggle Markdown Preview' },
+    },
   },
 
   -- Extend and create a/i textobjects
