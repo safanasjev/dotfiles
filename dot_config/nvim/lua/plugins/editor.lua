@@ -44,7 +44,8 @@ return {
         end,
         { desc = 'Fuzzy Find in Current Buffer' }
       )
-      vim.keymap.set('n', '<leader>fn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'Find in Neovim Config' })
+      vim.keymap.set('n', '<leader>fn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end,
+        { desc = 'Find in Neovim Config' })
 
       -- LSP keymaps inside LspAttach so they only work when LSP is running
 
@@ -69,7 +70,8 @@ return {
           vim.keymap.set('n', 'grO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
 
           -- Fuzzy find all the symbols in current workspace
-          vim.keymap.set('n', 'grW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+          vim.keymap.set('n', 'grW', builtin.lsp_dynamic_workspace_symbols,
+            { buffer = buf, desc = 'Open Workspace Symbols' })
 
           -- Goto type definition
           vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = 'Goto Type Definition' })
@@ -101,9 +103,15 @@ return {
     build = 'cd app && yarn install',
     init = function() vim.g.mkdp_filetypes = { 'markdown' } end,
     ft = { 'markdown' },
-    keys = {
-      { '<leader>tm', '<cmd>MarkdownPreviewToggle<cr>', desc = 'Toggle Markdown Preview' },
-    },
+    config = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'markdown',
+        callback = function(args)
+          vim.keymap.set('n', '<leader>tm', '<cmd>MarkdownPreviewToggle<cr>')
+          { buffer = args.buf, desc = 'Toggle Markdown Preview' }
+        end
+      })
+    end,
   },
 
   -- Extend and create a/i textobjects
@@ -139,11 +147,11 @@ return {
       delay = 0,
       spec = {
         -- Document existing key chains
-        { '<leader>f', group = 'Find', mode = { 'n', 'v' } },
-        { '<leader>g', group = 'Git', mode = { 'n', 'v' } },
+        { '<leader>f', group = 'Find',        mode = { 'n', 'v' } },
+        { '<leader>g', group = 'Git',         mode = { 'n', 'v' } },
         { '<leader>d', group = 'Diagnostics', mode = { 'n' } },
         { '<leader>t', group = 'Toggle' },
-        { 'gr', group = 'LSP', mode = { 'n' } },
+        { 'gr',        group = 'LSP',         mode = { 'n' } },
       },
     },
   },
