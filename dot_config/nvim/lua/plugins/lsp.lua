@@ -6,7 +6,6 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
   config = function()
-    -- Create augroup
     local function augroup(name) return vim.api.nvim_create_augroup('mygroup_' .. name, { clear = true }) end
 
     -- Run when LSP is attached
@@ -23,7 +22,7 @@ return {
         map('grn', vim.lsp.buf.rename, 'Rename')
 
         -- Execute a code action
-        map('gra', vim.lsp.buf.code_action, 'Code Actions', { 'n', 'x' })
+        map('gra', vim.lsp.buf.code_action, 'Goto Code Actions', { 'n', 'x' })
 
         -- Go to declaration
         map('grD', vim.lsp.buf.declaration, 'Goto Declaration')
@@ -31,8 +30,10 @@ return {
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 
         -- Toggle inlay hints
-        if client and client:supports_method('textDocument/inlayHint', event.buf) then
-          map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Toggle Inlay Hints')
+        if client then
+          map('<leader>th',
+            function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
+            'Toggle Inlay Hints')
         end
       end,
     })
@@ -45,19 +46,44 @@ return {
       ruff = {},
       ty = {},
       -- Go
-      gopls = {},
+      gopls = {
+        settings = {
+          gopls = {
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            },
+          },
+        },
+      },
       -- Bash
       bashls = {},
+      shellcheck = {},
       -- Markdown
       marksman = {},
       -- C/C++
       clangd = {},
       -- Java
-      jdtls = {},
+      jdtls = {
+        settings = {
+          java = {
+            inlayHints = { parameterNames = { enabled = "all" } },
+          }
+        }
+      },
       -- Lua
-      stylua = {},
       lua_ls = {
-
+        -- Special Lua Config, as recommended by neovim help docs
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
@@ -71,7 +97,8 @@ return {
             },
             workspace = {
               checkThirdParty = false,
-              library = vim.tbl_filter(function(d) return not d:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?') end, vim.api.nvim_get_runtime_file('', true)),
+              library = vim.tbl_filter(function(d) return not d:match(vim.fn.stdpath 'config' .. '/?a?f?t?e?r?') end,
+                vim.api.nvim_get_runtime_file('', true)),
             },
           })
         end,
@@ -87,7 +114,8 @@ return {
       },
     }
 
-    -- Create a table { servers + ensure_installe  }
+    local inlay_hints = { enabled = true }
+
     local ensure_installed = vim.tbl_keys(servers)
     vim.list_extend(ensure_installed, {
       -- Formatters and linters --
@@ -100,10 +128,8 @@ return {
       -- Java
       'google-java-format',
     })
-    -- Install everything
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    -- Enable each LSP
     for name, server in pairs(servers) do
       vim.lsp.config(name, server)
       vim.lsp.enable(name)
