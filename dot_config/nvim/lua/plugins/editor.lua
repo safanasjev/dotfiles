@@ -120,6 +120,22 @@ return {
     opts = {},
   },
 
+  -- Neo-tree
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons", -- optional, but recommended
+    },
+    keys = {
+      { '<leader>tn', '<cmd>Neotree<cr>', desc = 'Toggle Neo-tree' }
+    },
+    lazy = false, -- neo-tree will lazily load itself
+  },
+
+
   -- Oil file explorer
   {
     'stevearc/oil.nvim',
@@ -128,7 +144,7 @@ return {
     opts = {},
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
-      { '<leader>o', '<cmd>Oil<cr>', desc = 'Oil File Explorer' },
+      { '<leader>to', '<cmd>Oil<cr>', desc = 'Toggle Oil' },
     },
     lazy = false,
   },
