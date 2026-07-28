@@ -145,9 +145,6 @@ vim.keymap.set('n', '<leader>;', '@:', { desc = 'Repeat Last Command' })
 -- Center when jump to line number
 vim.keymap.set('n', 'G', 'Gzz', { noremap = true })
 
--- Keywordprg
-vim.keymap.set('n', '<leader>M', '<cmd>norm! K<cr>', { desc = 'Man Pages' })
-
 -- Save file
 vim.keymap.set('n', '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
 
