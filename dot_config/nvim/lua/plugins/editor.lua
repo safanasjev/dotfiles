@@ -114,9 +114,6 @@ return {
         end,
       })
     end,
-    -- keys = {
-    --   { '<leader>tm', '<cmd>MarkdownPreviewToggle<cr>', desc = 'Toggle Markdown Preview' },
-    -- },
   },
 
   -- Extend and create a/i textobjects
