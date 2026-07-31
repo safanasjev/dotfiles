@@ -92,7 +92,7 @@ return {
         { '<leader>f', group = 'Find', mode = { 'n', 'v' } },
         { '<leader>g', group = 'Git', mode = { 'n', 'v' } },
         { '<leader>gh', group = 'Git Hunk', mode = { 'n', 'v' }, icon = { icon = '󰊢', color = 'orange' } },
-        { '<leader>d', group = 'Diagnostics', mode = { 'n' } },
+        { '<leader>d', group = 'Debug and Diagnostics', mode = { 'n' }, icon = '󰒓' },
         {
           '<leader>l',
           group = 'LSP',

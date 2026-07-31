@@ -5,7 +5,6 @@ return {
     build = ':TSUpdate',
     branch = 'main',
     config = function()
-      -- ensure basic parser are installed
       local parsers = {
         'cpp',
         'go',
