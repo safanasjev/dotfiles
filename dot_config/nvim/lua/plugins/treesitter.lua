@@ -69,13 +69,6 @@ return {
           end
         end,
       })
-      vim.keymap.set('n', '<leader>tt', function()
-        if vim.b.ts_highlight then
-          vim.treesitter.stop()
-        else
-          vim.treesitter.start()
-        end
-      end, { desc = 'Toggle Treesitter Highlight' })
     end,
   },
 }
