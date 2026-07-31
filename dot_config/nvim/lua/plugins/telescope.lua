@@ -87,13 +87,13 @@ return {
         callback = function(event)
           -- Check if buffer directory is in git repo
           local is_git = vim.fn.system('git -C ' ..
-          vim.fn.expand('%:p:h') .. ' rev-parse --is-inside-work-tree 2>/dev/null')
+            vim.fn.expand('%:p:h') .. ' rev-parse --is-inside-work-tree 2>/dev/null')
 
           if vim.v.shell_error == 0 then
             local buf = event.buf
             vim.keymap.set('n', '<leader>gs', builtin.git_status, { buffer = buf, desc = 'Git Status' })
             vim.keymap.set('n', '<leader>gc', builtin.git_commits, { buffer = buf, desc = 'Git Commits' })
-            vim.keymap.set('n', '<leader>gr', builtin.git_branches, { buffer = buf, desc = 'Git Branches' })
+            vim.keymap.set('n', '<leader>gb', builtin.git_branches, { buffer = buf, desc = 'Git Branches' })
           end
         end,
       })
