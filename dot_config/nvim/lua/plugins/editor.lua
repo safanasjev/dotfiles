@@ -101,9 +101,12 @@ return {
             return { cat = 'filetype', name = vim.bo.filetype }
           end,
         },
-
         { '<leader>;', group = 'Repeat Last Command', icon = { icon = '󰑓' } },
         { '<leader>t', group = 'Toggle' },
+        { "][", desc = "Next Section Start" },
+        { "]]", desc = "Next Section End" },
+        { "[[", desc = "Previous Section Start" },
+        { "[]", desc = "Previous Section End" },
       },
     },
   },
