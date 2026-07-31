@@ -8,7 +8,24 @@ return {
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     config = function()
+      local actions = require('telescope.actions')
+
       require('telescope').setup {
+        defaults = {
+          sorting_strategy = 'ascending',
+          layout_strategy = 'horizontal',
+          layout_config = {
+            prompt_position = 'top',
+          },
+          path_display = { 'smart' },
+          mappings = {
+            i = {
+              ['<C-j>'] = actions.move_selection_next,
+              ['<C-k>'] = actions.move_selection_previous,
+              ['<C-c>'] = actions.close,
+            },
+          },
+        },
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
         },
@@ -24,24 +41,17 @@ return {
       vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
       vim.keymap.set('n', '<leader>ft', function() vim.cmd 'TodoTelescope' end, { desc = 'Find Todo Comments' })
       vim.keymap.set('n', '<leader>fp', builtin.builtin, { desc = 'Find Telescope Pickers' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>fw', builtin.grep_string, { desc = 'Find Current Word with Grep' })
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find by Grep' })
-      vim.keymap.set('n', '<leader>fz', builtin.grep_string, { desc = 'Fuzzy Find' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>fw', builtin.grep_string, { desc = 'Find Word Under Cursor' })
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find with Grep' })
+      vim.keymap.set('n', '<leader>fz', builtin.current_buffer_fuzzy_find, { desc = 'Fuzzy Find in Current Buffer' })
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find Diagnostics' })
-      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find Resume' })
+      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume Last Search' })
       vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = 'Find Recent Files' })
       vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = 'Find Commands' })
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffers' })
-      vim.keymap.set(
-        'n',
-        '<leader>f/',
-        function()
-          builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-            previewer = false,
-          })
-        end,
-        { desc = 'Fuzzy Find in Current Buffer' }
-      )
+      vim.keymap.set('n', '<leader>fa', function()
+        builtin.find_files({ hidden = true, no_ignore = true })
+      end, { desc = 'Find All Files' })
       vim.keymap.set('n', '<leader>fn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end,
         { desc = 'Find in Neovim Config' })
 
@@ -53,27 +63,38 @@ return {
         callback = function(event)
           local buf = event.buf
 
-          -- Find references
-          vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
+          vim.keymap.set('n', '<leader>lr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
 
-          -- Goto implementation
-          vim.keymap.set('n', 'gri', builtin.lsp_implementations,
+          vim.keymap.set('n', '<leader>li', builtin.lsp_implementations,
             { buffer = buf, desc = 'Goto Implementation' })
 
-          -- Goto definition
-          vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
+          vim.keymap.set('n', '<leader>ld', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
 
-          -- Fuzzy find all the symbols in current document
-          vim.keymap.set('n', 'grO', builtin.lsp_document_symbols,
+          vim.keymap.set('n', '<leader>lO', builtin.lsp_document_symbols,
             { buffer = buf, desc = 'Open Document Symbols' })
 
-          -- Fuzzy find all the symbols in current workspace
-          vim.keymap.set('n', 'grW', builtin.lsp_dynamic_workspace_symbols,
+          vim.keymap.set('n', '<leader>lW', builtin.lsp_dynamic_workspace_symbols,
             { buffer = buf, desc = 'Open Workspace Symbols' })
 
-          -- Goto type definition
-          vim.keymap.set('n', 'grt', builtin.lsp_type_definitions,
+          vim.keymap.set('n', '<leader>lt', builtin.lsp_type_definitions,
             { buffer = buf, desc = 'Goto Type Definition' })
+        end,
+      })
+
+      -- Git keymaps so they only work when git-managed file is open
+      vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+        group = augroup 'git',
+        callback = function(event)
+          -- Check if buffer directory is in git repo
+          local is_git = vim.fn.system('git -C ' ..
+          vim.fn.expand('%:p:h') .. ' rev-parse --is-inside-work-tree 2>/dev/null')
+
+          if vim.v.shell_error == 0 then
+            local buf = event.buf
+            vim.keymap.set('n', '<leader>gs', builtin.git_status, { buffer = buf, desc = 'Git Status' })
+            vim.keymap.set('n', '<leader>gc', builtin.git_commits, { buffer = buf, desc = 'Git Commits' })
+            vim.keymap.set('n', '<leader>gr', builtin.git_branches, { buffer = buf, desc = 'Git Branches' })
+          end
         end,
       })
     end,

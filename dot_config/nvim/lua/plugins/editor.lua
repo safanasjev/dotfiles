@@ -83,12 +83,27 @@ return {
     event = 'VeryLazy',
     opts = {
       delay = 0,
+      icons = {
+        rules = {
+          { pattern = 'git', icon = '󰊢', color = 'red' },
+        },
+      },
       spec = {
-        { '<leader>f', group = 'Find',        mode = { 'n', 'v' } },
-        { '<leader>g', group = 'Git',         mode = { 'n', 'v' } },
+        { '<leader>f', group = 'Find', mode = { 'n', 'v' } },
+        { '<leader>g', group = 'Git', mode = { 'n', 'v' } },
+        { '<leader>gh', group = 'Git Hunk', mode = { 'n', 'v' }, icon = { icon = '󰊢', color = 'orange' } },
         { '<leader>d', group = 'Diagnostics', mode = { 'n' } },
+        {
+          '<leader>l',
+          group = 'LSP',
+          mode = { 'n' },
+          icon = function()
+            return { cat = 'filetype', name = vim.bo.filetype }
+          end,
+        },
+
+        { '<leader>;', group = 'Repeat Last Command', icon = { icon = '󰑓' } },
         { '<leader>t', group = 'Toggle' },
-        { 'gr',        group = 'LSP',         mode = { 'n' } },
       },
     },
   },

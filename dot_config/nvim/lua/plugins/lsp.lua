@@ -19,13 +19,13 @@ return {
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = '' .. desc })
         end
         -- Rename variable under cursor
-        map('grn', vim.lsp.buf.rename, 'Rename')
+        map('<leader>ln', vim.lsp.buf.rename, 'Rename')
 
         -- Execute a code action
-        map('gra', vim.lsp.buf.code_action, 'Goto Code Actions', { 'n', 'x' })
+        map('<leader>la', vim.lsp.buf.code_action, 'Goto Code Actions', { 'n', 'x' })
 
         -- Go to declaration
-        map('grD', vim.lsp.buf.declaration, 'Goto Declaration')
+        map('<leader>lD', vim.lsp.buf.declaration, 'Goto Declaration')
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
 

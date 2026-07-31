@@ -28,9 +28,9 @@ vim.opt.foldmethod = 'manual'
 vim.opt.foldlevelstart = 99
 
 -- Tab settings
-vim.opt.tabstop = 4 -- Number of spaces tabs count for
-vim.opt.shiftwidth = 4 -- Size of an indent
-vim.opt.softtabstop = 4 -- Tab key inserts 4 spaces
+vim.opt.tabstop = 4      -- Number of spaces tabs count for
+vim.opt.shiftwidth = 4   -- Size of an indent
+vim.opt.softtabstop = 4  -- Tab key inserts 4 spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
 
 -- Disable line wrapping
@@ -321,7 +321,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out, 'WarningMsg' },
+      { out,                            'WarningMsg' },
       { '\nPress any key to exit...' },
     }, true, {})
     vim.fn.getchar()
