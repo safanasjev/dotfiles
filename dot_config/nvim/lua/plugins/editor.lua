@@ -1,6 +1,5 @@
 return {
 
-
   {
     'numToStr/Comment.nvim',
     opts = {},
@@ -97,16 +96,14 @@ return {
           '<leader>l',
           group = 'LSP',
           mode = { 'n' },
-          icon = function()
-            return { cat = 'filetype', name = vim.bo.filetype }
-          end,
+          icon = function() return { cat = 'filetype', name = vim.bo.filetype } end,
         },
-        { '<leader>;', group = 'Repeat Last Command', icon = { icon = '󰑓' } },
+        { '<leader>;', group = 'Repeat Last Command', icon = '󰑓' },
         { '<leader>t', group = 'Toggle' },
-        { "][", desc = "Next Section Start" },
-        { "]]", desc = "Next Section End" },
-        { "[[", desc = "Previous Section Start" },
-        { "[]", desc = "Previous Section End" },
+        { '][', desc = 'Next Section Start' },
+        { ']]', desc = 'Next Section End' },
+        { '[[', desc = 'Previous Section Start' },
+        { '[]', desc = 'Previous Section End' },
       },
     },
   },
