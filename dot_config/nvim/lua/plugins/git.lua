@@ -62,7 +62,7 @@ return {
           { desc = 'Git Hunk Quickfix List (all files in repo)' })
         map('n', '<leader>ghq', gitsigns.setqflist, { desc = 'Git Hunk Quickfix List (all changes in this file)' })
         -- Toggles
-        map('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = 'Git intra-line Word Diff' })
+        map('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = 'Toggle Git intra-line Word Diff' })
 
         -- Text object
         map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
