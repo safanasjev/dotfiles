@@ -27,7 +27,7 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { 'markdown' },
         callback = function(event)
-          vim.keymap.set('n', '<leader>tm', '<cmd>MarkdownPreviewToggle<cr>', {
+          vim.keymap.set('n', '<leader>tm', '<CMD>MarkdownPreviewToggle<CR>', {
             buffer = event.buf,
             desc = 'Toggle Markdown Preview',
           })
@@ -58,7 +58,7 @@ return {
       'nvim-tree/nvim-web-devicons', -- optional, but recommended
     },
     keys = {
-      { '<leader>tn', '<cmd>Neotree<cr>', desc = 'Toggle Neo-tree' },
+      { '<leader>tn', '<CMD>Neotree<CR>', desc = 'Toggle Neotree' },
     },
     lazy = false, -- neo-tree will lazily load itself
   },
@@ -71,7 +71,7 @@ return {
     opts = {},
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
-      { '<leader>to', '<cmd>Oil<cr>', desc = 'Toggle Oil' },
+      { '<leader>to', '<CMD>Oil<CR>', desc = 'Toggle Oil' },
     },
     lazy = false,
   },

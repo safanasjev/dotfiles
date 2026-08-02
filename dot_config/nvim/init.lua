@@ -28,9 +28,9 @@ vim.opt.foldmethod = 'manual'
 vim.opt.foldlevelstart = 99
 
 -- Tab settings
-vim.opt.tabstop = 4      -- Number of spaces tabs count for
-vim.opt.shiftwidth = 4   -- Size of an indent
-vim.opt.softtabstop = 4  -- Tab key inserts 4 spaces
+vim.opt.tabstop = 4 -- Number of spaces tabs count for
+vim.opt.shiftwidth = 4 -- Size of an indent
+vim.opt.softtabstop = 4 -- Tab key inserts 4 spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
 
 -- Disable line wrapping
@@ -146,7 +146,7 @@ vim.keymap.set('n', '<leader>;', '@:', { desc = 'Repeat Last Command' })
 vim.keymap.set('n', 'G', 'Gzz', { noremap = true })
 
 -- Save file
-vim.keymap.set('n', '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
+vim.keymap.set('n', '<leader>w', '<CMD>w<CR>', { desc = 'Save File' })
 
 -- Center cursor on scroll
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor on down scroll' })
@@ -160,7 +160,7 @@ vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', '<CMD>nohlsearch<CR>')
 
 -- Diagnostics keympas
 local diagnostic_goto = function(next, severity)
@@ -178,8 +178,8 @@ vim.keymap.set('n', ']d', diagnostic_goto(true), { desc = 'Next Diagnostic' })
 vim.keymap.set('n', '[d', diagnostic_goto(false), { desc = 'Prev Diagnostic' })
 
 -- Switch buffers with <left> and <right> arrow keys
-vim.keymap.set('n', '<left>', '<cmd>bp<cr>')
-vim.keymap.set('n', '<right>', '<cmd>bn<cr>')
+vim.keymap.set('n', '<left>', '<CMD>bp<CR>')
+vim.keymap.set('n', '<right>', '<CMD>bn<CR>')
 
 --  Switch between windows with CTRL+<hjkl>
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -188,10 +188,10 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Resize window using <ctrl> + arrow keys
-vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
-vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
-vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })
-vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Width' })
+vim.keymap.set('n', '<C-Up>', '<CMD>resize +2<CR>', { desc = 'Increase Window Height' })
+vim.keymap.set('n', '<C-Down>', '<CMD>resize -2<CR>', { desc = 'Decrease Window Height' })
+vim.keymap.set('n', '<C-Left>', '<CMD>vertical resize -2<CR>', { desc = 'Decrease Window Width' })
+vim.keymap.set('n', '<C-Right>', '<CMD>vertical resize +2<CR>', { desc = 'Increase Window Width' })
 
 -- Better up/down
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
@@ -321,7 +321,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out,                            'WarningMsg' },
+      { out, 'WarningMsg' },
       { '\nPress any key to exit...' },
     }, true, {})
     vim.fn.getchar()
