@@ -23,7 +23,7 @@ SHELLCHECK="shellcheck"
 PKG_MAN="brew install"
 NODEJS="node"
 SYNCTHING=""
-$PKG_MAN --cask alacritty firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app signal
+$PKG_MAN --cask alacritty lulu firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app signal
 xattr -d com.apple.quarantine /Applications/Alacritty.app  # Disable Gatekeeper
 
 
@@ -36,14 +36,14 @@ SHELLCHECK="ShellCheck"
 UV=""
 
 sudo zypper refresh
-sudo zypper dist-upgrade
+sudo zypper dup
 
 # vscode
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo > /dev/null
 
 sudo zypper refresh
-$PKG_MAN alacritty flatpak keyd tailscale ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
+$PKG_MAN alacritty flatpak keyd ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # tailscale
@@ -56,9 +56,6 @@ sudo firewall-cmd --reload
 
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
-
-## editors repo
-# sudo zypper addrepo https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/editors.repo
 
 sudo zypper refresh
 
@@ -91,15 +88,6 @@ curl -sS https://starship.rs/install.sh | sh
 
 sudo apt-get update
 
-### Arch ###
-{{- else if eq .chezmoi.osRelease.idLike "arch" }}
-PKG_MAN="sudo pacman -Syu --needed"
-$PKG_MAN paru alacritty flatpak keyd obsidian tailscale ksshaskpass base-devel
-flatpak install easyeffects
-paru -Syu --needed localsend-bin visual-studio-code-bin
-JAVA="jdk-openjdk"
-sudo systemctl enable tailscaled --now
-
 {{- end }}
 
 $PKG_MAN curl fping hyperfine unzip tmux fish neovim ripgrep $FD_FIND bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING $STARSHIP $NODEJS $TREE_SITTER mosh npm yarn $JAVA rsync $SHELLCHECK
@@ -113,9 +101,6 @@ rm -rf ~/Library/Caches/Homebrew/
 {{- else if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
 sudo apt-get clean
 
-{{- else if eq .chezmoi.osRelease.idLike "arch" }}
-sudo pacman -Sc
-
 {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 
 flatpak update
@@ -126,4 +111,4 @@ sudo zypper refresh
 
 {{- end }}
 
-echo "Everything is installed." 
+echo "End of chezmoi installation script." 
