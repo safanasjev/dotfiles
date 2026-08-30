@@ -49,6 +49,7 @@ return {
       vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = 'Find Recent Files' })
       vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = 'Find Commands' })
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffers' })
+      vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = 'Find Marks' })
       vim.keymap.set('n', '<leader>fa', function()
         builtin.find_files({ hidden = true, no_ignore = true })
       end, { desc = 'Find All Files' })
