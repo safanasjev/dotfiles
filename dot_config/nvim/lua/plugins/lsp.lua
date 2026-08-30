@@ -66,6 +66,15 @@ return {
           },
         },
       },
+      golangci_lint_ls = {
+        cmd = { 'golangci-lint-langserver' },
+        root_markers = { '.git', 'go.mod' },
+        init_options = {
+          command = {
+            'golangci-lint', 'run', '--output.json.path', 'stdout', '--show-stats=false', '--issues-exit-code=1'
+          },
+        },
+      },
       -- Bash
       bashls = {},
       shellcheck = {},
@@ -119,6 +128,8 @@ return {
     local ensure_installed = vim.tbl_keys(servers)
     vim.list_extend(ensure_installed, {
       -- Formatters and linters --
+      -- Go
+      'golangci-lint-langserver',
       -- C/C++
       'clang-format',
       -- Bash
