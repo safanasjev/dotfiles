@@ -17,20 +17,18 @@ return {
         },
       }
 
-      fzf.register_ui_select()
-
-      -- Keymaps
       vim.keymap.set('n', '<leader>fh', fzf.help_tags, { desc = 'Find Help' })
       vim.keymap.set('n', '<leader>fk', fzf.keymaps, { desc = 'Find Keymaps' })
       vim.keymap.set('n', '<leader>ff', fzf.files, { desc = 'Find Files' })
       vim.keymap.set('n', '<leader>ft',
         function() fzf.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|XXX|OPTIM', no_esc = true }) end)
-      vim.keymap.set('n', '<leader>ft', function() vim.cmd 'TodoFzfLua' end, { desc = 'Find Todo Comments' })
       vim.keymap.set('n', '<leader>fp', fzf.builtin, { desc = 'Find fzf-lua Pickers' })
       vim.keymap.set({ 'n', 'v' }, '<leader>fw', fzf.grep_cword, { desc = 'Find Word Under Cursor' })
       vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = 'Find with Grep' })
       vim.keymap.set('n', '<leader>fz', fzf.blines, { desc = 'Fuzzy Find in Current Buffer' })
-      vim.keymap.set('n', '<leader>fd', fzf.diagnostics_document, { desc = 'Find Diagnostics' })
+      vim.keymap.set('n', '<leader>dd', fzf.diagnostics_document, { desc = 'Doument Diagnostics' })
+      vim.keymap.set('n', '<leader>dw', fzf.diagnostics_document, { desc = 'Workspace Diagnostics' })
+      vim.keymap.set('n', '<leader>dq', fzf.quickfix, { desc = 'Diagnostics Quickfix List' })
       vim.keymap.set('n', '<leader>fr', fzf.resume, { desc = 'Resume Last Search' })
       vim.keymap.set('n', '<leader>f.', fzf.oldfiles, { desc = 'Find Recent Files' })
       vim.keymap.set('n', '<leader>fc', fzf.commands, { desc = 'Find Commands' })
