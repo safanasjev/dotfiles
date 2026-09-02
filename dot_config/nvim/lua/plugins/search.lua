@@ -21,7 +21,8 @@ return {
       vim.keymap.set('n', '<leader>fk', fzf.keymaps, { desc = 'Find Keymaps' })
       vim.keymap.set('n', '<leader>ff', fzf.files, { desc = 'Find Files' })
       vim.keymap.set('n', '<leader>ft',
-        function() fzf.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|XXX|OPTIM', no_esc = true }) end)
+        function() fzf.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|XXX|OPTIM', no_esc = true }) end,
+        { desc = 'Find Todo-Comments' })
       vim.keymap.set('n', '<leader>fp', fzf.builtin, { desc = 'Find fzf-lua Pickers' })
       vim.keymap.set({ 'n', 'v' }, '<leader>fw', fzf.grep_cword, { desc = 'Find Word Under Cursor' })
       vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = 'Find with Grep' })
