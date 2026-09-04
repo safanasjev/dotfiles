@@ -16,6 +16,8 @@ vim.cmd 'packadd nvim.undotree'
 
 -- [[ Options ]] --
 
+vim.o.winborder = 'single'
+
 -- Nerd font must be installed
 vim.g.have_nerd_font = true
 
@@ -28,9 +30,9 @@ vim.opt.foldmethod = 'manual'
 vim.opt.foldlevelstart = 99
 
 -- Tab settings
-vim.opt.tabstop = 4 -- Number of spaces tabs count for
-vim.opt.shiftwidth = 4 -- Size of an indent
-vim.opt.softtabstop = 4 -- Tab key inserts 4 spaces
+vim.opt.tabstop = 4      -- Number of spaces tabs count for
+vim.opt.shiftwidth = 4   -- Size of an indent
+vim.opt.softtabstop = 4  -- Tab key inserts 4 spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
 
 -- Disable line wrapping
@@ -210,7 +212,7 @@ vim.keymap.set('x', '>', '>gv')
 vim.diagnostic.config {
   update_in_insert = false,
   severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
+  float = { source = 'if_many' },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
   virtual_text = true,
   virtual_lines = false,
@@ -273,7 +275,7 @@ vim.api.nvim_create_autocmd({ 'VimResized' }, {
   end,
 })
 
--- close some filetypes with <q>
+-- Close some filetypes with <q>
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup 'close_with_q',
   pattern = {
@@ -284,6 +286,7 @@ vim.api.nvim_create_autocmd('FileType', {
     'gitsigns-blame',
     'grug-far',
     'help',
+    'man',
     'lspinfo',
     'neotest-output',
     'neotest-output-panel',
@@ -321,7 +324,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-      { out, 'WarningMsg' },
+      { out,                            'WarningMsg' },
       { '\nPress any key to exit...' },
     }, true, {})
     vim.fn.getchar()

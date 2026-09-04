@@ -7,14 +7,17 @@ return {
 
       fzf.setup {
         winopts = {
+          border = 'single',
           preview = {
             layout = 'horizontal',
+            border = 'single',
             scrollbar = false,
           },
         },
         fzf_opts = {
           ['--layout'] = 'reverse',
         },
+
       }
 
       vim.keymap.set('n', '<leader>fh', fzf.help_tags, { desc = 'Find Help' })
