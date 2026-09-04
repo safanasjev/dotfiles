@@ -132,6 +132,8 @@ vim.opt.jumpoptions = 'view'
 
 -- [[ Keymaps ]] --
 
+vim.keymap.set('n', 'q', '<CMD>fc<CR>', { desc = "Close floating window" })
+
 -- Undotree
 vim.keymap.set('n', '<leader>tu', require('undotree').open, { desc = 'Toggle Undotree' })
 
