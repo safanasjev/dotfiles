@@ -16,8 +16,6 @@ vim.cmd 'packadd nvim.undotree'
 
 -- [[ Options ]] --
 
-vim.o.winborder = 'single'
-
 -- Nerd font must be installed
 vim.g.have_nerd_font = true
 
@@ -34,6 +32,7 @@ vim.opt.tabstop = 4      -- Number of spaces tabs count for
 vim.opt.shiftwidth = 4   -- Size of an indent
 vim.opt.softtabstop = 4  -- Tab key inserts 4 spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
+
 
 -- Disable line wrapping
 vim.opt.wrap = false
@@ -82,6 +81,9 @@ vim.opt.showbreak = '↪ '
 
 -- Global statusline
 vim.opt.laststatus = 3
+
+-- Global border style
+vim.opt.winborder = 'single'
 
 -- Insert indents automatically
 vim.opt.smartindent = true
@@ -340,8 +342,13 @@ require('lazy').setup {
   spec = {
     { import = 'plugins' },
   },
+  ui = {
+    backdrop = 100,
+    border = 'single',
+  },
   install = { colorscheme = { 'tokyonight' } },
   checker = { enabled = false },
+  vim.api.nvim_set_hl(0, "LazyNormal", { link = "NormalFloat" })
 }
 
 -------------------------------------------------------------------------------

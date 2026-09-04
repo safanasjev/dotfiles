@@ -16,6 +16,8 @@ return {
     config = function(_, opts)
       require('tokyonight').setup(opts)
       vim.cmd.colorscheme 'tokyonight'
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = 'none' })
+      vim.api.nvim_set_hl(0, "FloatBorder", { bg = 'none', fg = "#27A1B9" })
     end,
   },
 
