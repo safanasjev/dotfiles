@@ -6,6 +6,8 @@ return {
       local fzf = require('fzf-lua')
       fzf.setup {
 
+        fzf.register_ui_select(),
+
         winopts = {
           border = 'single',
           backdrop = 100,
@@ -19,7 +21,6 @@ return {
           ['--layout'] = 'reverse',
         },
         fzf_colors = true,
-
       }
 
       vim.keymap.set('n', '<leader>fh', fzf.help_tags, { desc = 'Find Help' })
@@ -62,14 +63,18 @@ return {
 
           vim.keymap.set('n', '<leader>ld', fzf.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
 
-          vim.keymap.set('n', '<leader>lO', fzf.lsp_document_symbols,
+          vim.keymap.set('n', '<leader>lo', fzf.lsp_document_symbols,
             { buffer = buf, desc = 'Open Document Symbols' })
 
-          vim.keymap.set('n', '<leader>lW', fzf.lsp_live_workspace_symbols,
+          vim.keymap.set('n', '<leader>lw', fzf.lsp_live_workspace_symbols,
             { buffer = buf, desc = 'Open Workspace Symbols' })
 
           vim.keymap.set('n', '<leader>lt', fzf.lsp_typedefs,
             { buffer = buf, desc = 'Goto Type Definition' })
+
+          vim.keymap.set({ 'n', 'x' }, '<leader>la', fzf.lsp_code_actions, { buffer = buf, desc = 'Code Actions' })
+
+          vim.keymap.set('n', '<leader>lD', fzf.lsp_declarations, { buffer = buf, desc = 'Goto Declaration' })
         end,
       })
 

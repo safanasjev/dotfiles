@@ -12,28 +12,12 @@ return {
     vim.api.nvim_create_autocmd('LspAttach', {
       group = augroup 'lsp_attach',
       callback = function(event)
-        local map = function(keys, func, desc, mode)
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
-          mode = mode or 'n'
-          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = '' .. desc })
-        end
-        -- Rename variable under cursor
-        map('<leader>ln', vim.lsp.buf.rename, 'Rename')
-
-        -- Execute a code action
-        map('<leader>la', vim.lsp.buf.code_action, 'Goto Code Actions', { 'n', 'x' })
-
-        -- Go to declaration
-        map('<leader>lD', vim.lsp.buf.declaration, 'Goto Declaration')
-
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-
         -- Toggle inlay hints
         if client then
-          map('<leader>th',
+          vim.keymap.set('n', '<leader>th',
             function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
-            'Toggle Inlay Hints')
+            { buffer = event.buf, desc = 'Toggle Inlay Hints' })
         end
       end,
     })
