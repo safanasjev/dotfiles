@@ -20,11 +20,6 @@ return {
         },
         fzf_colors = true,
 
-        vim.api.nvim_set_hl(0, "FzfLuaBorder", { link = "FloatBorder" }),
-        vim.api.nvim_set_hl(0, "FzfLuaNormal", { link = "NormalFloat" }),
-        vim.api.nvim_set_hl(0, "FzfLuaTitle", { bg = 'none', fg = '#FF9E64' }),
-        vim.api.nvim_set_hl(0, "FzfLuaPreviewTitle", { bg = 'none', fg = '#FF9E64' }),
-        vim.api.nvim_set_hl(0, "FzfLuaTitleFlags", { bg = 'none' }),
       }
 
       vim.keymap.set('n', '<leader>fh', fzf.help_tags, { desc = 'Find Help' })

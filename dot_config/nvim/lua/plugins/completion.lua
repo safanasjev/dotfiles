@@ -13,13 +13,16 @@ return {
         ['<C-f>'] = { 'select_and_accept', 'fallback' },
         ['<C-k>'] = { 'select_prev', 'fallback' },
         ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<C-e>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      },
+      cmdline = {
+        keymap = { preset = 'inherit' },
       },
 
 
       appearance = {
         nerd_font_variant = 'normal',
       },
+
 
       sources = {
         default = { 'lsp', 'path' },
@@ -37,7 +40,7 @@ return {
       },
 
       signature = {
-        enabled = true,
+        enabled = false,
         trigger = {
           enabled = false,
         },
