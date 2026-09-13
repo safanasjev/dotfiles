@@ -22,6 +22,7 @@ return {
       end,
     })
 
+
     local servers = {
       -- LSP servers --
       -- Rust
@@ -62,6 +63,8 @@ return {
       -- Bash
       bashls = {},
       shellcheck = {},
+      -- Just
+      just = {},
       -- Markdown
       marksman = {},
       -- C/C++

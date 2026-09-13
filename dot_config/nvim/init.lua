@@ -33,7 +33,6 @@ vim.opt.shiftwidth = 4   -- Size of an indent
 vim.opt.softtabstop = 4  -- Tab key inserts 4 spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
 
-
 -- Disable line wrapping
 vim.opt.wrap = false
 
@@ -152,7 +151,10 @@ vim.keymap.set('n', '<leader>;', '@:', { desc = 'Repeat Last Command' })
 vim.keymap.set('n', 'G', 'Gzz', { noremap = true })
 
 -- Save file
-vim.keymap.set('n', '<leader>w', '<CMD>w<CR>', { desc = 'Save File' })
+vim.keymap.set('n', '<leader>w', '<CMD>update<CR>', { desc = 'Write Buffer' })
+
+-- Exit Neovim
+vim.keymap.set('n', '<leader>e', '<CMD>qa<CR>', { desc = 'Exit' })
 
 -- Center cursor on scroll
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor on down scroll' })

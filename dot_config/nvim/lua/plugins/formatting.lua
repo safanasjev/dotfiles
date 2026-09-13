@@ -8,7 +8,6 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = {
-        -- These options will be passed to conform.format()
         timeout_ms = 500,
         lsp_format = 'fallback',
       },
@@ -24,7 +23,9 @@ return {
         go = { 'gofmt' },
         java = { 'google-java-format' },
         javascript = { 'prettier' },
+        yaml = { 'prettier' },
       },
+
     },
   },
 
