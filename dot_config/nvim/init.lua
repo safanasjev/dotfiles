@@ -177,7 +177,7 @@ vim.keymap.set('n', 'G', 'Gzz', { noremap = true })
 vim.keymap.set('n', '<leader>w', '<CMD>update<CR>', { desc = 'Write Buffer' })
 
 -- Exit Neovim
-vim.keymap.set('n', '<leader>e', '<CMD>qa<CR>', { desc = 'Exit' })
+vim.keymap.set('n', '<leader>q', '<CMD>qa<CR>', { desc = 'Quit' })
 
 -- Center cursor on scroll
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor on down scroll' })
