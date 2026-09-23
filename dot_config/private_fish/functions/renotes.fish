@@ -17,7 +17,7 @@ function renotes
     end
 
     echo "Compressing "(count $new)" file(s)..."
-    if pngquant --quality=1-5 --ext .png --force $new
+    if pngquant --quality=1-10 --ext .png --force $new
         echo "Done."
     else
         echo "Error: pngquant failed or skipped some files." >&2
