@@ -1,7 +1,7 @@
 function renotes
     set n (count notes-*.png)
     set new
-    for f in Pasted\ Image*.png
+    for f in (ls -tr *.png | string match -v 'notes-*.png')
         set n (math $n + 1)
         if mv -n $f notes-$n.png
             echo "Renamed: $f -> notes-$n.png"
@@ -17,10 +17,10 @@ function renotes
     end
 
     echo "Compressing "(count $new)" file(s)..."
-    if pngquant --quality=40-70 --ext .png --force $new
+    if pngquant --quality=1-5 --ext .png --force $new
         echo "Done."
     else
-        echo "Error: pngquant failed or skipped some files (quality below 40)." >&2
+        echo "Error: pngquant failed or skipped some files." >&2
         return 1
     end
 end
