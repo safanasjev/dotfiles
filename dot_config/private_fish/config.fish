@@ -10,10 +10,10 @@ starship init fish | source
 abbr --add obs obsidian
 
 ### eza
-abbr --add ls eza -F --
-abbr --add ll eza -lhF --
-abbr --add la eza -alhF --
-abbr --add lst eza -TF --
+abbr --add ls eza
+abbr --add ll eza -l
+abbr --add la eza -al
+abbr --add lst eza -T
 
 ### tmux
 abbr --add tks tmux kill-session -t
