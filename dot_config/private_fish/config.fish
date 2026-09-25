@@ -9,7 +9,6 @@ starship init fish | source
 ### obsidian
 abbr --add obs obsidian
 
-
 ### eza
 abbr --add ls eza -F --
 abbr --add ll eza -lhF --
@@ -28,6 +27,10 @@ abbr --add cz chezmoi
 abbr --add czup chezmoi update --exclude=scripts
 abbr --add czra chezmoi re-add
 abbr --add czcd chezmoi cd
+
+### git
+# from https://github.com/jonhoo/configs/blob/master/shell/.config/fish/config.fish
+abbr -a gah 'git stash; and git pull --rebase; and git stash pop' 
 
 ## Environment variables
 
