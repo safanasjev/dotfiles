@@ -1,7 +1,7 @@
 function renotes
-    set n (count notes-*.png)
+    set n (ls | string match 'notes-*.png' | count)
     set new
-    for f in (ls -tr *.png | string match -v 'notes-*.png')
+    for f in (ls -tr | string match '*.png' | string match -v 'notes-*.png')
         set n (math $n + 1)
         if mv -n $f notes-$n.png
             echo "Renamed: $f -> notes-$n.png"
