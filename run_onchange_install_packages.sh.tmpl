@@ -43,7 +43,7 @@ sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo > /dev/null
 
 sudo zypper refresh
-$PKG_MAN alacritty flatpak keyd ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
+$PKG_MAN alacritty trash-cli glib2-tools flatpak keyd ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # tailscale
@@ -104,7 +104,7 @@ sudo apt-get clean
 {{- else if eq .chezmoi.osRelease.id "opensuse-tumbleweed" }}
 
 flatpak update
-sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app md.obsidian.Obsidian
+sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app it.mijorus.gearlever
 sudo zypper refresh
 sudo zypper clean --all
 sudo zypper refresh
