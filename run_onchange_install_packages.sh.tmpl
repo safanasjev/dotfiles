@@ -4,7 +4,6 @@
 NODEJS="nodejs"
 NPM="npm"
 UV="uv"
-JAVA="java"
 TREE_SITTER="tree-sitter-cli"
 SYNCTHING="syncthing"
 SHELLCHECK="shellcheck"
@@ -20,7 +19,7 @@ PKG_MAN="brew install"
 NODEJS="node"
 NPM=""  # npm ships with the Homebrew node formula
 SYNCTHING=""
-$PKG_MAN --cask Sanyam-G/switch/switch alacritty lulu firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app signal
+$PKG_MAN --cask Sanyam-G/switch/switch alacritty lulu firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app docker-desktop syncthing-app signal
 
 # Remove the quarantine flag from Alacritty so macOS lets it open (ignore error if flag is absent)
 xattr -d com.apple.quarantine /Applications/Alacritty.app 2>/dev/null || true
@@ -29,7 +28,6 @@ xattr -d com.apple.quarantine /Applications/Alacritty.app 2>/dev/null || true
 ### openSUSE Tumbleweed ###
 {{- else }}
 PKG_MAN="sudo zypper install -y"
-JAVA="java-21-openjdk"
 TREE_SITTER="tree-sitter"
 SHELLCHECK="ShellCheck"
 UV=""
@@ -63,7 +61,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ### Main packages ###
 
-$PKG_MAN zoxide nmap hyperfine unzip tmux fish neovim ripgrep fd bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING starship $NODEJS $TREE_SITTER mosh $NPM yarn $JAVA rsync just $SHELLCHECK
+$PKG_MAN zoxide nmap hyperfine unzip tmux fish neovim ripgrep fd bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING starship $NODEJS $TREE_SITTER mosh $NPM yarn rsync just $SHELLCHECK
 
 # tmux plugin manager (skip if already cloned)
 [ -d ~/.config/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
