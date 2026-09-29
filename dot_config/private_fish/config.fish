@@ -8,12 +8,19 @@ if status is-interactive
     # Tools setup
     starship init fish | source
     zoxide init fish | source
+    # Enable autosuggestions from builtin cd
+    complete -c z -e
+    complete -c z --wraps cd
 end
 
 # Abbreviations
 
-## obsidian
+## Obsidian
 abbr --add obs obsidian
+
+## Zoxide
+abbr -a cd z
+abbr -a cdi zi
 
 ## Eza
 abbr --add ls eza

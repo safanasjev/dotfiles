@@ -161,9 +161,6 @@ vim.keymap.set('n', 'q', '<CMD>fc<CR>', { desc = "Close floating window" })
 -- Undotree
 vim.keymap.set('n', '<leader>tu', require('undotree').open, { desc = 'Toggle Undotree' })
 
--- Fix : typo
-vim.keymap.set('n', ';', ':')
-
 -- Switch to last buffer with <Tab>
 vim.keymap.set('n', '<Tab>', '<C-^>', { desc = 'Cycle Buffers' })
 
