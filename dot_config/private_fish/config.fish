@@ -46,7 +46,7 @@ abbr -a tns tmux new -s
 ## Chezmoi
 abbr -a cz chezmoi
 abbr -c chezmoi up 'update --exclude=scripts'
-abbr -c chezmoi rd 're-add'
+abbr -c chezmoi ra 're-add'
 
 # Environment variables
 
