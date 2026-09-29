@@ -15,8 +15,6 @@ SHELLCHECK="shellcheck"
 # Xcode Command Line Tools and Homebrew must be installed before running this script.
 # run: xcode-select --install
 # run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-xcode-select --install
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 PKG_MAN="brew install"
 NODEJS="node"
@@ -39,7 +37,7 @@ UV=""
 sudo zypper refresh
 sudo zypper -n dup
 
-$PKG_MAN awk git
+$PKG_MAN gawk git less
 
 # vscode
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
