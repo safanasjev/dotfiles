@@ -16,34 +16,37 @@ end
 # Abbreviations
 
 ## Obsidian
-abbr --add obs obsidian
+abbr -a obs obsidian
 
 ## Zoxide
 abbr -a cd z
 abbr -a cdi zi
 
 ## Eza
-abbr --add ls eza
-abbr --add ll eza -l
-abbr --add la eza -al
-abbr --add lst eza -T
-
-## Tmux
-abbr --add tks tmux kill-session -t
-abbr --add tls tmux ls
-abbr --add ta tmux attach
-abbr --add tat tmux attach -t
-abbr --add tns tmux new -s
-
-## Chezmoi
-abbr --add cz chezmoi
-abbr --add czup chezmoi update --exclude=scripts
-abbr --add czra chezmoi re-add
-abbr --add czcd chezmoi cd
+# eza always shows file-type indicators; abbreviations expand to it
+alias eza="eza -F=always"
+abbr -a ls eza
+abbr -a ll eza -l
+abbr -a la eza -al
+abbr -a lst eza -T
 
 ## Git
+abbr -c git graph 'log --all --graph --decorate --oneline'
+
 # From https://github.com/jonhoo/configs/blob/master/shell/.config/fish/config.fish
-abbr -a gah 'git stash; and git pull --rebase; and git stash pop' 
+abbr -c git spp 'stash; and git pull --rebase; and git stash pop' 
+
+## Tmux
+abbr -a tks tmux kill-session -t
+abbr -a tls tmux ls
+abbr -a ta tmux attach
+abbr -a tat tmux attach -t
+abbr -a tns tmux new -s
+
+## Chezmoi
+abbr -a cz chezmoi
+abbr -c chezmoi up 'update --exclude=scripts'
+abbr -c chezmoi rd 're-add'
 
 # Environment variables
 

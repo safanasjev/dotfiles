@@ -11,5 +11,3 @@
 	editor = nvim
 [commit]
 	template = ~/.config/git/gitmessage.txt
-[alias]
-	graph = log --all --graph --decorate --oneline
