@@ -40,5 +40,8 @@ abbr -a gah 'git stash; and git pull --rebase; and git stash pop'
 ## Set Github username
 set -gx GITHUB_USERNAME safanasjev
 
+## Fzf, display no prefix by default
+set -gx FZF_CTRL_R_OPTS "--with-nth 3.. --bind 'alt-t:change-with-nth(2..|1,3..|3..)'"
+
 ## Locale
 set -gx LANG en_US.UTF-8
