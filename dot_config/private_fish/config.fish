@@ -31,10 +31,11 @@ abbr -a la eza -al
 abbr -a lst eza -T
 
 ## Git
-abbr -c git graph 'log --all --graph --decorate --oneline'
-
-# From https://github.com/jonhoo/configs/blob/master/shell/.config/fish/config.fish
-abbr -c git spp 'stash; and git pull --rebase; and git stash pop' 
+abbr -c git graph "log --all --graph --decorate --oneline"
+abbr -c git sl "stash list"
+abbr -c git sync "pull --rebase --autostash"
+abbr -c git st "status -sb"
+abbr -c git sw "switch"
 
 ## Tmux
 abbr -a tks tmux kill-session -t
@@ -45,8 +46,8 @@ abbr -a tns tmux new -s
 
 ## Chezmoi
 abbr -a cz chezmoi
-abbr -c chezmoi up 'update --exclude=scripts'
-abbr -c chezmoi ra 're-add'
+abbr -c chezmoi up "update --exclude=scripts"
+abbr -c chezmoi ra "re-add"
 
 # Environment variables
 
