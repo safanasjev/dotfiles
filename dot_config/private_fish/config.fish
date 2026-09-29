@@ -1,48 +1,44 @@
 if status is-interactive
-    # Commands to run in interactive sessions can go here
+    # GPG
+    set -gx GPG_TTY (tty)
+    # Tools setup
+    starship init fish | source
+    fzf --fish | source
+    zoxide init fish | source
 end
 
-starship init fish | source
+# Abbreviations
 
-## Abbreviations
-
-### obsidian
+## obsidian
 abbr --add obs obsidian
 
-### eza
+## Eza
 abbr --add ls eza
 abbr --add ll eza -l
 abbr --add la eza -al
 abbr --add lst eza -T
 
-### tmux
+## Tmux
 abbr --add tks tmux kill-session -t
 abbr --add tls tmux ls
 abbr --add ta tmux attach
 abbr --add tat tmux attach -t
 abbr --add tns tmux new -s
 
-### chezmoi
+## Chezmoi
 abbr --add cz chezmoi
 abbr --add czup chezmoi update --exclude=scripts
 abbr --add czra chezmoi re-add
 abbr --add czcd chezmoi cd
 
-### git
-# from https://github.com/jonhoo/configs/blob/master/shell/.config/fish/config.fish
+## Git
+# From https://github.com/jonhoo/configs/blob/master/shell/.config/fish/config.fish
 abbr -a gah 'git stash; and git pull --rebase; and git stash pop' 
 
-## Environment variables
+# Environment variables
 
-### For bashrc syntax (export VARIABLE=value) use "set -x VARIABLE value"
-set -x DYLD_LIBRARY_PATH /usr/local/lib
+## Set Github username
+set -gx GITHUB_USERNAME safanasjev
 
-### Set github username
-set -x GITHUB_USERNAME safanasjev
-
-### Locale
-set -x LC_CTYPE en_US.UTF-8
-set -x LC_ALL en_US.UTF-8
-
-### GPG
-set -x GPG_TTY (tty)
+## Locale
+set -gx LANG en_US.UTF-8
