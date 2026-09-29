@@ -2,7 +2,6 @@
 
 ### Variables ###
 NODEJS="nodejs"
-NPM="npm"
 UV="uv"
 JAVA="java"
 TREE_SITTER="tree-sitter-cli"
@@ -15,17 +14,12 @@ SHELLCHECK="shellcheck"
 # Xcode Command Line Tools and Homebrew must be installed before running this script.
 # run: xcode-select --install
 # run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-xcode-select --install
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 PKG_MAN="brew install"
 NODEJS="node"
-NPM=""  # npm ships with the Homebrew node formula
 SYNCTHING=""
 $PKG_MAN --cask Sanyam-G/switch/switch alacritty lulu firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app orbstack syncthing-app signal
-
-# Remove the quarantine flag from Alacritty so macOS lets it open (ignore error if flag is absent)
-xattr -d com.apple.quarantine /Applications/Alacritty.app 2>/dev/null || true
+xattr -d com.apple.quarantine /Applications/Alacritty.app  # Disable Gatekeeper
 
 
 ### openSUSE Tumbleweed ###
@@ -37,22 +31,21 @@ SHELLCHECK="ShellCheck"
 UV=""
 
 sudo zypper refresh
-sudo zypper -n dup
+sudo zypper dup
 
-$PKG_MAN sudo git
+$PKG_MAN git
 
 # vscode
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo > /dev/null
 
-# refresh needed so the new vscode repo is visible
 sudo zypper refresh
 $PKG_MAN alacritty trash-cli glib2-tools flatpak keyd ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale set --operator="$USER"
+sudo tailscale set --operator=$USER
 
 sudo firewall-cmd --permanent --add-service=mdns
 sudo firewall-cmd --permanent --add-service=ssh
@@ -61,17 +54,15 @@ sudo firewall-cmd --reload
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
+sudo zypper refresh
+
 {{- end }}
 
 ### Main packages ###
 
-$PKG_MAN zoxide nmap hyperfine unzip tmux fish neovim ripgrep fd bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING starship $NODEJS $TREE_SITTER mosh $NPM yarn $JAVA rsync just $SHELLCHECK
-
-# tmux plugin manager (skip if already cloned)
-[ -d ~/.config/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-
-# fisher is fish syntax, so run it through fish
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+$PKG_MAN zoxide nmap hyperfine unzip tmux fish neovim ripgrep fd bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING starship $NODEJS $TREE_SITTER mosh npm yarn $JAVA rsync just $SHELLCHECK
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
 ### Clean cache and run post install scripts ###
 
@@ -80,9 +71,11 @@ rm -rf ~/Library/Caches/Homebrew/
 
 {{- else }}
 
-flatpak update -y
+flatpak update
 sudo flatpak install -y flathub com.github.wwmm.easyeffects org.localsend.localsend_app it.mijorus.gearlever
+sudo zypper refresh
 sudo zypper clean --all
+sudo zypper refresh
 
 {{- end }}
 
