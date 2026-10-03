@@ -1,24 +1,17 @@
 return {
   'mfussenegger/nvim-dap',
   dependencies = {
-    -- Debugger UI
-    'rcarriga/nvim-dap-ui',
-
-    -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
+    -- Debugger UI (replaces nvim-dap-ui, nvim-nio and nvim-dap-virtual-text)
+    { 'igorlfs/nvim-dap-view', version = '1.*' },
 
     -- Installs the debug adapters
     'mason-org/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
-    -- Virtual text showing variable values
-    'theHamsta/nvim-dap-virtual-text',
-
     -- Add standalone debuggers here
+
     -- Go
     'https://github.com/leoluz/nvim-dap-go',
-
-
   },
 
   keys = {
@@ -26,24 +19,23 @@ return {
       '<F3>',
       function()
         require('dap').close()
-        require('dapui').close()
+        require('dap-view').close()
       end,
       desc = 'Debug: Stop',
     },
-    { '<F4>',       function() require('dap').restart() end,                                             desc = 'Debug: Restart' },
-    { '<F5>',       function() require('dap').continue() end,                                            desc = 'Debug: Start/Continue' },
-    { '<F10>',      function() require('dap').step_over() end,                                           desc = 'Debug: Step Over' },
-    { '<F11>',      function() require('dap').step_into() end,                                           desc = 'Debug: Step Into' },
-    { '<F12>',      function() require('dap').step_out() end,                                            desc = 'Debug: Step Out' },
-    { '<leader>db', function() require('dap').toggle_breakpoint() end,                                   desc = 'Debug: Breakpoint' },
+    { '<F4>', function() require('dap').restart() end, desc = 'Debug: Restart' },
+    { '<F5>', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
+    { '<F10>', function() require('dap').step_over() end, desc = 'Debug: Step Over' },
+    { '<F11>', function() require('dap').step_into() end, desc = 'Debug: Step Into' },
+    { '<F12>', function() require('dap').step_out() end, desc = 'Debug: Step Out' },
+    { '<leader>db', function() require('dap').toggle_breakpoint() end, desc = 'Debug: Breakpoint' },
     { '<leader>dc', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Debug: Conditional Breakpoint' },
+    -- Add the variable under the cursor (or the visual selection) to Watches
+    { '<leader>da', function() require('dap-view').add_expr() end, mode = { 'n', 'v' }, desc = 'Debug: Add Watch' },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    { '<F7>',       function() require('dapui').toggle() end,                                            desc = 'Debug: See last session result.' },
+    { '<F7>', function() require('dap-view').toggle() end, desc = 'Debug: See last session result.' },
   },
   config = function()
-    local dap = require 'dap'
-    local dapui = require 'dapui'
-
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
@@ -64,52 +56,49 @@ return {
       },
     }
 
-    -- Setup virtual text
-    require('nvim-dap-virtual-text').setup()
+    require('dap-view').setup {
+      auto_toggle = true,
 
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
-    ---@diagnostic disable-next-line: missing-fields
-    dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      ---@diagnostic disable-next-line: missing-fields
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+      -- Replaces nvim-dap-virtual-text (needs neovim 0.12+ and treesitter)
+      virtual_text = { enabled = true },
+
+      winbar = {
+        controls = {
+          enabled = true,
         },
+      },
+
+      icons = {
+        expanded = '▾ ',
+        collapsed = '▸ ',
+        pause = '⏸',
+        play = '▶',
+        step_into = '⏎',
+        step_over = '⏭',
+        step_out = '⏮',
+        step_back = 'b',
+        run_last = '▶▶',
+        terminate = '⏹',
+        disconnect = '⏏',
       },
     }
 
     -- Change breakpoint icons
     vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#FF5F57' })
     vim.api.nvim_set_hl(0, 'DapStop', { fg = '#FEBC2D' })
+    -- Plain unicode icons, so they render without a nerd font
     local breakpoint_icons = vim.g.have_nerd_font
         and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-        or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+      or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
     for type, icon in pairs(breakpoint_icons) do
       local tp = 'Dap' .. type
       local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
       vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     end
 
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Configure standalone debbugers here
+    -- Configure standalone debuggers here
     require('dap-go').setup {
       delve = {},
     }
-  end
+  end,
 }
