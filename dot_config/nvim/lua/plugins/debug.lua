@@ -15,25 +15,21 @@ return {
   },
 
   keys = {
-    {
-      '<F3>',
-      function()
-        require('dap').close()
-        require('dap-view').close()
-      end,
-      desc = 'Debug: Stop',
-    },
-    { '<F4>', function() require('dap').restart() end, desc = 'Debug: Restart' },
-    { '<F5>', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
-    { '<F10>', function() require('dap').step_over() end, desc = 'Debug: Step Over' },
-    { '<F11>', function() require('dap').step_into() end, desc = 'Debug: Step Into' },
-    { '<F12>', function() require('dap').step_out() end, desc = 'Debug: Step Out' },
-    { '<leader>db', function() require('dap').toggle_breakpoint() end, desc = 'Debug: Breakpoint' },
+    { '<F5>',       function() require('dap').continue() end,                                            desc = 'Debug: Start/Continue' },
+    { '<F6>',       function() require('dap').run_last() end,                                            desc = 'Debug: Run Last' },
+    { '<F7>',       function() require('dap').terminate() end,                                           desc = 'Debug: Terminate' },
+    { '<F8>',       function() require('dap').disconnect() end,                                          desc = 'Debug: Disconnect' },
+    { '<F9>',       function() require('dap').step_into() end,                                           desc = 'Debug: Step Into' },
+    { '<F10>',      function() require('dap').step_over() end,                                           desc = 'Debug: Step Over' },
+    { '<F11>',      function() require('dap').step_out() end,                                            desc = 'Debug: Step Out' },
+    { '<F12>',      function() require('dap').step_back() end,                                           desc = 'Debug: Step Back' },
+    { '<leader>db', function() require('dap').toggle_breakpoint() end,                                   desc = 'Debug: Breakpoint' },
     { '<leader>dc', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Debug: Conditional Breakpoint' },
+    { '<leader>dh', function() require('dap-view').hover() end,                                          desc = 'Debug: Hover' },
     -- Add the variable under the cursor (or the visual selection) to Watches
-    { '<leader>da', function() require('dap-view').add_expr() end, mode = { 'n', 'v' }, desc = 'Debug: Add Watch' },
+    { '<leader>da', function() require('dap-view').add_expr() end,                                       mode = { 'n', 'v' },                     desc = 'Debug: Add Watch' },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    { '<F7>', function() require('dap-view').toggle() end, desc = 'Debug: See last session result.' },
+    { '<F7>',       function() require('dap-view').toggle() end,                                         desc = 'Debug: See last session result.' },
   },
   config = function()
     require('mason-nvim-dap').setup {
@@ -65,7 +61,10 @@ return {
       winbar = {
         controls = {
           enabled = true,
+          buttons = { 'play', 'run_last', 'terminate', 'disconnect', 'step_into', 'step_over', 'step_out', 'step_back' },
         },
+        sections = { "console", "watches", "scopes", "exceptions", "breakpoints", "threads", "repl" },
+        default_section = "console",
       },
     }
 
@@ -75,7 +74,7 @@ return {
     -- Plain unicode icons, so they render without a nerd font
     local breakpoint_icons = vim.g.have_nerd_font
         and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-      or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+        or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
     for type, icon in pairs(breakpoint_icons) do
       local tp = 'Dap' .. type
       local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
