@@ -43,12 +43,15 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 
 # refresh needed so the new vscode repo is visible
 sudo zypper refresh
-$PKG_MAN alacritty trash-cli glib2-tools flatpak keyd ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis
+$PKG_MAN alacritty trash-cli glib2-tools flatpak keyd ksshaskpass6 code gnome-disk-utility patterns-devel-base-devel_basis systemd-resolved
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # tailscale
 curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale set --operator="$USER"
+sudo systemctl enable --now systemd-resolved
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+sudo systemctl restart tailscaled
 
 sudo firewall-cmd --permanent --add-service=mdns
 sudo firewall-cmd --permanent --add-service=ssh
