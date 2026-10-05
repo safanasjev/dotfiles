@@ -11,6 +11,8 @@ if status is-interactive
     # Enable autosuggestions from builtin cd
     complete -c z -e
     complete -c z --wraps cd
+    set fzf_preview_dir_cmd eza --all --color=always --classify=always
+    set fzf_history_opts --bind 'shift-delete:execute-silent(history delete --exact --case-sensitive -- (string replace --regex "^.*? │ " "" -- {}))+reload(history --null --show-time="%m-%d %H:%M:%S │ ")'
 end
 
 # Abbreviations
@@ -23,8 +25,8 @@ abbr -a cd z
 abbr -a cdi zi
 
 ## Eza
-# eza always shows file-type indicators; abbreviations expand to it
-alias eza="eza -F=always"
+# Eza always shows file-type indicators; abbreviations expand to it
+alias eza="eza --classify=always"
 abbr -a ls eza
 abbr -a ll eza -l
 abbr -a la eza -al
