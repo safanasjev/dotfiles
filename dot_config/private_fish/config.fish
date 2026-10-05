@@ -12,6 +12,7 @@ if status is-interactive
     complete -c z -e
     complete -c z --wraps cd
     set fzf_preview_dir_cmd eza --all --color=always --classify=always
+    # Delete history entries with SHIFT-DEL
     set fzf_history_opts --bind 'shift-delete:execute-silent(history delete --exact --case-sensitive -- (string replace --regex "^.*? │ " "" -- {}))+reload(history --null --show-time="%m-%d %H:%M:%S │ ")'
 end
 
