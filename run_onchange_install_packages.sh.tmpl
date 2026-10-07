@@ -70,7 +70,7 @@ $PKG_MAN fish zoxide nmap hyperfine unzip tmux neovim ripgrep fd bat eza fzf $UV
 [ -d ~/.config/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
 # fisher is fish syntax, so run it through fish
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
 ### Clean cache and run post install scripts ###
 
