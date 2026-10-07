@@ -1,6 +1,8 @@
+{{ if eq .chezmoi.os "darwin" -}}
 # The following lines were added by Docker Desktop to add commands to your PATH.
-export PATH="$PATH:/Users/saveli/.docker/bin"
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.docker/bin"
 # End of Docker Desktop section.
+{{ end -}}
 
 if status is-interactive
     # GPG
