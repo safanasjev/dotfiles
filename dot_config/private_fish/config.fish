@@ -11,7 +11,6 @@ if status is-interactive
     # Enable autosuggestions from builtin cd
     complete -c z -e
     complete -c z --wraps cd
-    set fzf_preview_dir_cmd eza --all --color=always --classify=always
     # Delete history entries with SHIFT-DEL
     set fzf_history_opts --bind 'shift-delete:execute-silent(history delete --exact --case-sensitive -- (string replace --regex "^.*? │ " "" -- {}))+reload(history --null --show-time="%m-%d %H:%M:%S │ ")'
 end
@@ -53,6 +52,9 @@ abbr -c chezmoi up "update --exclude=scripts"
 abbr -c chezmoi ra "re-add"
 
 # Environment variables
+
+# fzf.fish: use eza for the directory preview pane
+set fzf_preview_dir_cmd eza --all --color=always --classify=always
 
 ## Set Github username
 set -gx GITHUB_USERNAME safanasjev
