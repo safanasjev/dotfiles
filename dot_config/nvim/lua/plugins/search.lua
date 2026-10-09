@@ -77,10 +77,10 @@ return {
       })
 
       -- Git keymaps so they only work when git-managed file is open
-      vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufReadPost', 'BufNewFile' }, {
         group = augroup 'git',
         callback = function(event)
-          vim.fn.system('git -C ' .. vim.fn.expand('%:p:h') .. ' rev-parse --is-inside-work-tree 2>/dev/null')
+          vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null")
           if vim.v.shell_error == 0 then
             local buf = event.buf
             vim.keymap.set('n', '<leader>gs', fzf.git_status, { buffer = buf, desc = 'Git Status' })
