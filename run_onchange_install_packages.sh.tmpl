@@ -9,7 +9,10 @@ SYNCTHING="syncthing"
 SHELLCHECK="shellcheck"
 
 
+#############
 ### MacOS ###
+#############
+
 {{- if eq .chezmoi.os "darwin" }}
 # Xcode Command Line Tools and Homebrew must be installed before running this script.
 # run: xcode-select --install
@@ -25,7 +28,10 @@ $PKG_MAN --cask Sanyam-G/switch/switch alacritty lulu firefox betterdisplay easy
 xattr -d com.apple.quarantine /Applications/Alacritty.app 2>/dev/null || true
 
 
+###########################
 ### openSUSE Tumbleweed ###
+###########################
+
 {{- else }}
 PKG_MAN="sudo zypper install -y"
 TREE_SITTER="tree-sitter"
@@ -62,7 +68,10 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 {{- end }}
 
+
+#####################
 ### Main packages ###
+#####################
 
 $PKG_MAN fish zoxide nmap hyperfine unzip tmux neovim ripgrep fd bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING starship $NODEJS $TREE_SITTER mosh $NPM yarn rsync just $SHELLCHECK
 
@@ -72,7 +81,10 @@ $PKG_MAN fish zoxide nmap hyperfine unzip tmux neovim ripgrep fd bat eza fzf $UV
 # fisher is fish syntax, so run it through fish
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
-### Clean cache and run post install scripts ###
+
+####################
+### Post-install ###
+####################
 
 {{- if eq .chezmoi.os "darwin" }}
 rm -rf ~/Library/Caches/Homebrew/
