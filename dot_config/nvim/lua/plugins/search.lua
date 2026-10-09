@@ -5,9 +5,6 @@ return {
     config = function()
       local fzf = require('fzf-lua')
       fzf.setup {
-
-        fzf.register_ui_select(),
-
         winopts = {
           border = 'single',
           backdrop = 100,
@@ -22,6 +19,7 @@ return {
         },
         fzf_colors = true,
       }
+      fzf.register_ui_select()
 
       vim.keymap.set('n', '<leader>fh', fzf.help_tags, { desc = 'Find Help' })
       vim.keymap.set('n', '<leader>fk', fzf.keymaps, { desc = 'Find Keymaps' })
@@ -34,7 +32,7 @@ return {
       vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = 'Find with Grep' })
       vim.keymap.set('n', '<leader>fz', fzf.blines, { desc = 'Fuzzy Find in Current Buffer' })
       vim.keymap.set('n', '<leader>dd', fzf.diagnostics_document, { desc = 'Doument Diagnostics' })
-      vim.keymap.set('n', '<leader>dw', fzf.diagnostics_document, { desc = 'Workspace Diagnostics' })
+      vim.keymap.set('n', '<leader>dw', fzf.diagnostics_workspace, { desc = 'Workspace Diagnostics' })
       vim.keymap.set('n', '<leader>dq', fzf.quickfix, { desc = 'Diagnostics Quickfix List' })
       vim.keymap.set('n', '<leader>fr', fzf.resume, { desc = 'Resume Last Search' })
       vim.keymap.set('n', '<leader>f.', fzf.oldfiles, { desc = 'Find Recent Files' })
@@ -82,9 +80,7 @@ return {
       vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         group = augroup 'git',
         callback = function(event)
-          local is_git = vim.fn.system('git -C ' ..
-            vim.fn.expand('%:p:h') .. ' rev-parse --is-inside-work-tree 2>/dev/null')
-
+          vim.fn.system('git -C ' .. vim.fn.expand('%:p:h') .. ' rev-parse --is-inside-work-tree 2>/dev/null')
           if vim.v.shell_error == 0 then
             local buf = event.buf
             vim.keymap.set('n', '<leader>gs', fzf.git_status, { buffer = buf, desc = 'Git Status' })
