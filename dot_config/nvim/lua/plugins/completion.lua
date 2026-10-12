@@ -39,26 +39,9 @@ return {
         ghost_text = { enabled = true },
       },
 
-      signature = {
-        enabled = false,
-        trigger = {
-          enabled = false,
-        },
-        window = {
-          treesitter_highlighting = true,
-          show_documentation = true
-        },
-      },
       fuzzy = { implementation = 'prefer_rust_with_warning' },
     },
 
     opts_extend = { 'sources.default' },
-  },
-
-  -- Autopairs
-  {
-    'nvim-mini/mini.pairs',
-    event = 'InsertEnter',
-    opts = {},
   },
 }

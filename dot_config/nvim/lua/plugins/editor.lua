@@ -1,10 +1,4 @@
 return {
-
-  {
-    'numToStr/Comment.nvim',
-    opts = {},
-  },
-
   -- Todo Comments
   {
     'folke/todo-comments.nvim',
@@ -16,37 +10,36 @@ return {
     },
   },
 
-  -- Markdown previewer
+  -- Markdown preview
   {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    build = 'cd app && yarn install',
-    init = function() vim.g.mkdp_filetypes = { 'markdown' } end,
-    ft = { 'markdown' },
-    config = function()
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'markdown' },
-        callback = function(event)
-          vim.keymap.set('n', '<leader>tm', '<CMD>MarkdownPreviewToggle<CR>', {
-            buffer = event.buf,
-            desc = 'Toggle Markdown Preview',
-          })
-        end,
-      })
-    end,
+    "sammaji/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle" },
+    ft = { "markdown" },
+    opts = {
+      auto_close = false,
+    },
+    keys = {
+      { '<leader>tm', '<CMD>MarkdownPreviewToggle<CR>', ft = "markdown", desc = 'Toggle Markdown Preview' },
+    }
   },
 
   -- Extend and create a/i textobjects
-  {
-    'nvim-mini/mini.ai',
-    opts = {},
-  },
+  { 'nvim-mini/mini.ai',        opts = {}, },
 
   -- Fast and feature-rich surround actions
-  {
-    'nvim-mini/mini.surround',
-    opts = {},
-  },
+  { 'nvim-mini/mini.surround',  opts = {}, },
+
+  -- Move any selection in any direction
+  { 'nvim-mini/mini.move',      opts = {}, },
+
+  -- Comment lines
+  { 'nvim-mini/mini.comment',   opts = {}, },
+
+  -- Split and join arguments
+  { 'nvim-mini/mini.splitjoin', opts = {}, },
+
+  -- Autopairs
+  { 'nvim-mini/mini.pairs',     event = 'InsertEnter', opts = {}, },
 
   -- Neo-tree
   {
