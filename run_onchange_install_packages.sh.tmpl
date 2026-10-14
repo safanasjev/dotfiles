@@ -73,12 +73,12 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### Main packages ###
 #####################
 
-$PKG_MAN fish zoxide nmap hyperfine unzip tmux neovim ripgrep fd bat eza fzf $UV fastfetch btop tealdeer $SYNCTHING starship $NODEJS $TREE_SITTER mosh $NPM rsync just $SHELLCHECK
+$PKG_MAN fish zoxide nmap hyperfine unzip tmux neovim ripgrep fd bat eza fzf fastfetch btop tealdeer starship mosh rsync just $SHELLCHECK $SYNCTHING $TREE_SITTER $NODEJS $UV $NPM
 
 # tmux plugin manager (skip if already cloned)
 [ -d ~/.config/tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
-# fisher is fish syntax, so run it through fish
+# fisher
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
 
