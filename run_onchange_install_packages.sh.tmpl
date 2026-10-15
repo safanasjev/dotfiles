@@ -22,7 +22,7 @@ PKG_MAN="brew install"
 NODEJS="node"
 NPM=""  # npm ships with the Homebrew node formula
 SYNCTHING=""
-$PKG_MAN --cask Sanyam-G/switch/switch alacritty lulu firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app docker-desktop syncthing-app signal
+$PKG_MAN --cask Sanyam-G/switch/switch finetune alacritty lulu firefox betterdisplay easydict font-jetbrains-mono-nerd-font hyperkey iina keka localsend obsidian raycast visual-studio-code pearcleaner tailscale-app docker-desktop syncthing-app signal
 
 # Remove the quarantine flag from Alacritty so macOS lets it open (ignore error if flag is absent)
 xattr -d com.apple.quarantine /Applications/Alacritty.app 2>/dev/null || true
