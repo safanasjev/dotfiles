@@ -87,7 +87,7 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 ####################
 
 {{- if eq .chezmoi.os "darwin" }}
-rm -rf ~/Library/Caches/Homebrew/
+brew cleanup --prune=all
 
 {{- else }}
 
