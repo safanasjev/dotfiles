@@ -13,6 +13,7 @@ SHELLCHECK="shellcheck"
 ### MacOS ###
 #############
 
+
 {{- if eq .chezmoi.os "darwin" }}
 # Xcode Command Line Tools and Homebrew must be installed before running this script.
 # run: xcode-select --install
@@ -31,6 +32,7 @@ xattr -d com.apple.quarantine /Applications/Alacritty.app 2>/dev/null || true
 ###########################
 ### openSUSE Tumbleweed ###
 ###########################
+
 
 {{- else }}
 PKG_MAN="sudo zypper install -y"
@@ -73,6 +75,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### Main packages ###
 #####################
 
+
 $PKG_MAN fish zoxide nmap hyperfine unzip tmux neovim ripgrep fd bat eza fzf fastfetch btop tealdeer starship mosh rsync just $SHELLCHECK $SYNCTHING $TREE_SITTER $NODEJS $UV $NPM
 
 # tmux plugin manager (skip if already cloned)
@@ -85,6 +88,7 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 ####################
 ### Post-install ###
 ####################
+
 
 {{- if eq .chezmoi.os "darwin" }}
 brew cleanup --prune=all
