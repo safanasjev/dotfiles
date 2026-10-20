@@ -113,7 +113,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Number of lines to keep above and below the cursor
-vim.opt.scrolloff = 4
+vim.opt.scrolloff = 0
 
 -- Number of columns to keep left and right of the cursor
 vim.opt.sidescrolloff = 8
