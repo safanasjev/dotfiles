@@ -6,17 +6,17 @@ function bulk_rename
     set old $argv[1]
     set new $argv[2]
 
-    set files (string match -- "$old-*.png" *.png)
+    set files $old-*
     if test (count $files) -eq 0
-        echo "error: no files matching $old-<number>.png" >&2
+        echo "error: no files matching $old-<number>.<extension>" >&2
         return 1
     end
 
     # validate everything first, so nothing is renamed if any file is bad
     for f in $files
         set rest (string replace -- "$old-" "" $f)
-        if not string match -qr '^[0-9]+\.png$' -- $rest
-            echo "error: '$f' must be named $old-<number>.png" >&2
+        if not string match -qr '^[0-9]+\..+$' -- $rest
+            echo "error: '$f' must be named $old-<number>.<extension>" >&2
             return 1
         end
     end
