@@ -9,5 +9,6 @@
 	tool = nvimdiff
 [core]
 	editor = nvim
+	pager = less -FRX
 [commit]
 	template = ~/.config/git/gitmessage.txt
