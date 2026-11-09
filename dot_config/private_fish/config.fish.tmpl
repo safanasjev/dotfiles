@@ -41,6 +41,8 @@ abbr -c git sync "pull --rebase --autostash"
 abbr -c git st "status -sb"
 abbr -c git sw "switch"
 abbr -c git last "log -1 --stat"
+abbr -c git fetched "log --oneline --stat HEAD..@{u}"
+abbr -c git fetched-patch "log -p HEAD..@{u}"
 
 ## Tmux
 abbr -a tks tmux kill-session -t
