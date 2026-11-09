@@ -24,14 +24,17 @@ end
 # chmod
 abbr -a cx chmod +x
 
-## Obsidian
+# cat
+abbr -a cat bat -p
+
+## obsidian
 abbr -a obs obsidian
 
-## Zoxide
+## zoxide
 abbr -a cd z
 abbr -a cdi zi
 
-## Eza
+## eza
 # Eza always shows file-type indicators; abbreviations expand to it
 alias eza="eza --classify=always"
 abbr -a ls eza
@@ -39,7 +42,7 @@ abbr -a ll eza -l
 abbr -a la eza -al
 abbr -a lst eza -T
 
-## Git
+## git
 abbr -c git graph "log --all --graph --decorate --oneline"
 abbr -c git sl "stash list"
 abbr -c git sync "pull --rebase --autostash"
@@ -49,7 +52,7 @@ abbr -c git last "log -1 --stat"
 abbr -c git fetched "log --oneline --stat HEAD..@{u}"
 abbr -c git fetched-patch "log -p HEAD..@{u}"
 
-## Tmux
+## tmux
 abbr -a tks tmux kill-session -t
 abbr -a tls tmux ls
 abbr -a ta tmux attach
@@ -57,7 +60,7 @@ abbr -a tat tmux attach -t
 abbr -a tns tmux new -s
 abbr -c tmux kys "kill-server"
 
-## Chezmoi
+## chezmoi
 abbr -a cz chezmoi
 abbr -c chezmoi up "update --exclude=scripts"
 abbr -c chezmoi ra "re-add"
