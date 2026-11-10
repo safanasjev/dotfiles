@@ -16,6 +16,7 @@ if status is-interactive
     # Delete history entries with SHIFT-DEL
     set fzf_history_opts --bind 'shift-delete:execute-silent(history delete --exact --case-sensitive -- (string replace --regex "^.*? │ " "" -- {} | string collect))+reload(history --null --show-time="%m-%d %H:%M:%S │ ")'
     set PAGER 'bat --paging=always'
+    set -x MANROFFOPT "-c"
     set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 end
 
