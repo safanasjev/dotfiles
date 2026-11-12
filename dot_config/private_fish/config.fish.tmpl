@@ -7,70 +7,75 @@ export PATH="$PATH:{{ .chezmoi.homeDir }}/.docker/bin"
 if status is-interactive
     # GPG
     set -gx GPG_TTY (tty)
+
     # Tools setup
     starship init fish | source
     zoxide init fish | source
-    # Enable autosuggestions from builtin cd
+
+    # Enable built-in-ls-like suggestions
     complete -c z -e
     complete -c z --wraps cd
+
     # Delete history entries with SHIFT-DEL
     set fzf_history_opts --bind 'shift-delete:execute-silent(history delete --exact --case-sensitive -- (string replace --regex "^.*? │ " "" -- {} | string collect))+reload(history --null --show-time="%m-%d %H:%M:%S │ ")'
-    set PAGER 'bat --paging=always'
+
+    # Pager
+    set -gx PAGER 'bat --paging=always'
     set -x MANROFFOPT "-c"
     set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
+
+    # fzf.fish: use eza for the directory preview pane
+    set -g fzf_preview_dir_cmd eza --all --color=always --classify=always
+
+    # Abbreviations
+
+    ## chmod
+    abbr -a cx chmod +x
+
+    ## cat
+    abbr -a cat bat -p
+
+    ## obsidian
+    abbr -a obs obsidian
+
+    ## zoxide
+    abbr -a cd z
+    abbr -a cdi zi
+
+    ## eza
+    # Eza always shows file-type indicators; abbreviations expand to it
+    alias eza="eza --classify=always"
+    abbr -a ls eza
+    abbr -a ll eza -l
+    abbr -a la eza -al
+    abbr -a lst eza -T
+
+    ## git
+    abbr -c git graph "log --all --graph --decorate --oneline"
+    abbr -c git sl "stash list"
+    abbr -c git sync "pull --rebase --autostash"
+    abbr -c git st "status -sb"
+    abbr -c git sw "switch"
+    abbr -c git last "log -1 --stat"
+    abbr -c git fetched "log --oneline --stat HEAD..@{u}"
+    abbr -c git fetched-patch "log -p HEAD..@{u}"
+
+    ## tmux
+    abbr -a tks tmux kill-session -t
+    abbr -a tls tmux ls
+    abbr -a ta tmux attach
+    abbr -a tat tmux attach -t
+    abbr -a tns tmux new -s
+    abbr -c tmux kys "kill-server"
+
+    ## chezmoi
+    abbr -a cz chezmoi
+    abbr -c chezmoi up "update --exclude=scripts"
+    abbr -c chezmoi ra "re-add"
+    abbr -c chezmoi push "git push"
 end
 
-# Abbreviations
-
-# chmod
-abbr -a cx chmod +x
-
-# cat
-abbr -a cat bat -p
-
-## obsidian
-abbr -a obs obsidian
-
-## zoxide
-abbr -a cd z
-abbr -a cdi zi
-
-## eza
-# Eza always shows file-type indicators; abbreviations expand to it
-alias eza="eza --classify=always"
-abbr -a ls eza
-abbr -a ll eza -l
-abbr -a la eza -al
-abbr -a lst eza -T
-
-## git
-abbr -c git graph "log --all --graph --decorate --oneline"
-abbr -c git sl "stash list"
-abbr -c git sync "pull --rebase --autostash"
-abbr -c git st "status -sb"
-abbr -c git sw "switch"
-abbr -c git last "log -1 --stat"
-abbr -c git fetched "log --oneline --stat HEAD..@{u}"
-abbr -c git fetched-patch "log -p HEAD..@{u}"
-
-## tmux
-abbr -a tks tmux kill-session -t
-abbr -a tls tmux ls
-abbr -a ta tmux attach
-abbr -a tat tmux attach -t
-abbr -a tns tmux new -s
-abbr -c tmux kys "kill-server"
-
-## chezmoi
-abbr -a cz chezmoi
-abbr -c chezmoi up "update --exclude=scripts"
-abbr -c chezmoi ra "re-add"
-abbr -c chezmoi push "git push"
-
 # Environment variables
-
-## fzf.fish: use eza for the directory preview pane
-set fzf_preview_dir_cmd eza --all --color=always --classify=always
 
 ## Set Github username
 set -gx GITHUB_USERNAME safanasjev
