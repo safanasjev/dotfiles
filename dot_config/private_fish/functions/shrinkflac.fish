@@ -25,9 +25,9 @@ function shrinkflac --description 'Shrink hi-res FLACs to 16-bit / <=48 kHz: ver
     if not test -d "$root"
         echo "not a directory: $root"; return 1
     end
-    for t in ffmpeg flac metaflac find wc
+    for t in ffmpeg flac metaflac find wc perl sort
         if not command -q $t
-            echo "missing: $t   (macOS: brew install ffmpeg flac | Debian: sudo apt install ffmpeg flac)"
+            echo "missing: $t   (macOS: brew install ffmpeg flac | Debian: sudo apt install ffmpeg flac perl)"
             return 1
         end
     end
@@ -39,6 +39,9 @@ function shrinkflac --description 'Shrink hi-res FLACs to 16-bit / <=48 kHz: ver
     if ffmpeg -hide_banner -buildconf 2>/dev/null | string match -q '*--enable-libsoxr*'
         set soxr 1
     end
+
+    # groups an exported tag list into NUL-terminated records, so multi-line values stay in one piece
+    set -l grouper 's/\n\z//; my @r; for my $l (split /\n/, $_, -1) { if ($l =~ /^[\x20-\x3C\x3E-\x7D]+=/) { push @r, $l } elsif (@r) { $r[-1] .= "\n" . $l } } print map { "$_\0" } @r;'
 
     set -l files (find "$root" -type f -iname '*.flac' -print0 | string split0 | sort)
     set -l todo 0
@@ -109,15 +112,20 @@ function shrinkflac --description 'Shrink hi-res FLACs to 16-bit / <=48 kHz: ver
         set -l rawbits
         test $tb -gt 16; and set rawbits -bits_per_raw_sample $tb
 
-        if not ffmpeg -nostdin -v error -xerror -y -i "$f" -map 0:a:0 -map 0:v? -c:v copy -disposition:v attached_pic -map_metadata 0 -af "$af" -c:a flac $rawbits -f flac "$part"
+        # audio + cover only; tags are copied separately with metaflac
+        if not ffmpeg -nostdin -v error -xerror -y -i "$f" -map 0:a:0 -map 0:v? -c:v copy -disposition:v attached_pic -map_metadata -1 -af "$af" -c:a flac $rawbits -f flac "$part"
             echo "   !! ffmpeg failed, original untouched"
             rm -f "$part"
             set failed (math $failed + 1)
             continue
         end
         metaflac --add-seekpoint=5s "$part"
+
+        # copy tags exactly (repeated tags and multi-line values included)
         metaflac --remove-all-tags "$part"
-        metaflac --export-tags-to=- "$f" | metaflac --import-tags-from=- "$part"
+        metaflac --no-utf8-convert --export-tags-to=- "$f" | perl -0777 -ne $grouper | while read -z -l rec
+            test -n "$rec"; and metaflac --no-utf8-convert --set-tag="$rec" "$part"
+        end
 
         # verification
         set -l why
@@ -132,11 +140,16 @@ function shrinkflac --description 'Shrink hi-res FLACs to 16-bit / <=48 kHz: ver
         test "$obps" = "$tb"; or set -a why "bit depth is $obps"
         test "$och" = "$ch"; or set -a why "channels changed"
         test (math "abs($ototal - $expected)") -le $tol; or set -a why "length is off ($ototal samples, expected about $expected)"
-        set -l tin (metaflac --export-tags-to=- "$f" | count)
-        set -l tout (metaflac --export-tags-to=- "$part" | count)
-        test $tout -ge $tin; or set -a why "tags lost ($tin -> $tout)"
-        set -l pin (metaflac --list --block-type=PICTURE "$f" | string match -r 'type: 6' | count)
-        set -l pout (metaflac --list --block-type=PICTURE "$part" | string match -r 'type: 6' | count)
+
+        set -l ta (metaflac --no-utf8-convert --export-tags-to=- "$f" | sort | string collect)
+        set -l tb2 (metaflac --no-utf8-convert --export-tags-to=- "$part" | sort | string collect)
+        test "$ta" = "$tb2"; or set -a why "tags differ from the original"
+        set -l ca (metaflac --list --block-type=VORBIS_COMMENT "$f" | string match -r 'comments: \d+')
+        set -l cb (metaflac --list --block-type=VORBIS_COMMENT "$part" | string match -r 'comments: \d+')
+        test "$ca" = "$cb"; or set -a why "tag count differs ($ca vs $cb)"
+
+        set -l pin (metaflac --list --block-type=PICTURE "$f" | string match -r '\(PICTURE\)' | count)
+        set -l pout (metaflac --list --block-type=PICTURE "$part" | string match -r '\(PICTURE\)' | count)
         test $pout -ge $pin; or set -a why "embedded cover lost"
 
         if test (count $why) -gt 0
@@ -146,7 +159,9 @@ function shrinkflac --description 'Shrink hi-res FLACs to 16-bit / <=48 kHz: ver
             continue
         end
 
-        chmod --reference="$f" "$part" 2>/dev/null
+        # keep the original file mode (GNU stat, then BSD/macOS stat)
+        set -l mode (stat -c %a "$f" 2>/dev/null; or stat -f %Lp "$f" 2>/dev/null)
+        test -n "$mode"; and chmod $mode "$part"
         command mv -f "$part" "$f"
         set -l newsize (wc -c < "$f" | string trim)
         set after_total (math $after_total + $newsize)
